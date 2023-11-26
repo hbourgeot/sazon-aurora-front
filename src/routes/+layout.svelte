@@ -1,32 +1,63 @@
 <script lang="ts">
+  // Third Components
+  import { Button, Layout, Swap } from "stwui";
+  import { Icon, Bars3, XCircle } from "svelte-hero-icons";
+
+  // My components
+  import Sidebar from "$lib/components/Sidebar.svelte";
+
+  // Styles
+  import "@fontsource-variable/raleway";
+  import "@fontsource/kaushan-script"
   import "../app.pcss";
-  import { Button, Drawer, Layout, Portal } from "stwui";
-  import { Icon, Bars3 } from "svelte-hero-icons";
-  let drawerOpen = false;
+  import { page } from "$app/stores";
+
+  // Code
+  let drawer: {open: boolean} = {open: false};
   function openDrawer() {
-    drawerOpen = true;
+    drawer.open = true;
   }
 
-  function closeDrawer() {
-    drawerOpen = false;
-  }
+  let y: number;
 </script>
+<svelte:window bind:scrollY="{y}"/>
+<svelte:head>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' />
+</svelte:head>
 
 <Layout class="h-full">
-  <Layout.Header class="static z-0">
-    <Button type="primary" on:click="{openDrawer}">
-      <Icon src="{Bars3}" class="h-5 w-5" />
+  <Layout.Header class="fixed top-0 z-[1] px-3 transition-colors {$page.route.id === '/' && y < 100 ? '!bg-transparent shadow-none' : 'shadow-md'}">
+    <Button type="primary" on:click="{openDrawer}" shape="circle">
+        <Icon src="{Bars3}" class="h-5 w-5"/>
     </Button>
-    <Layout.Header.Extra slot="extra">Extra</Layout.Header.Extra>
+    <Layout.Header.Extra slot="extra">
+      <h1 class="text-3xl font-semibold">La sazón de <span class="gradient font-extrabold">Aurora</span></h1>
+    </Layout.Header.Extra>
   </Layout.Header>
   <Layout.Content>
-    <Layout.Content.Body class="flex items-center justify-center min-h-[200px]">
-      <Portal>
-        {#if drawerOpen}
-          <Drawer handleClose={closeDrawer} placement="left" />
-        {/if}
-      </Portal>
+    <Layout.Content.Body class="flex items-center justify-center min-h-[200px] w-full">
       <slot />
     </Layout.Content.Body>
   </Layout.Content>
 </Layout>
+<Sidebar open={drawer.open}/>
+
+<style>
+  :global(body){
+    font-family: 'Raleway Variable', sans-serif;
+  }
+  
+  :global(h1, h2, h3, h4, h5, h6){
+    font-family: 'Raleway Variable', sans-serif;
+  }
+  
+  :global(.gradient){
+    background: linear-gradient(90deg, #33f 5%, #3f3 80%);
+    padding: 0 5px;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Kaushan Script', sans-serif;
+  }
+
+</style>
