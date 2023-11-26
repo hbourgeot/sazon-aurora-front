@@ -11,44 +11,48 @@ const config = {
 
   plugins: [require("@tailwindcss/forms"), require("stwui/plugin")],
   stwui: {
-    themes: ["light", "dark", {
-			mytheme: {
-				// Required
-				primary: '#2563eb',
-				default: '#E4E6EB',
-				danger: '#dc2626',
-				surface: '#ffffff',
-				background: '#F0F2F5',
-				border: '#E8E9EC',
-				hover: '#000000',
+    themes: [
+      "light",
+      "dark",
+      {
+        mytheme: {
+          // Required
+          primary: "#1E40AF", // Un azul intenso para el color primario
+          default: "#E0F2FE", // Un azul muy claro para el color por defecto
+          danger: "#EF4444", // Rojo para los botones o elementos de alerta
+          surface: "#FFFFFF", // Blanco para la superficie
+          background: "#EFF6FF", // Un azul pálido para el fondo
+          border: "#BFDBFE", // Un azul claro para los bordes
+          hover: "#60A5FA", // Un azul más claro para el estado hover
 
-				// Optional
-				content: '#050505',
-				info: '#3b82f6',
-				success: '#22c55e',
-				error: '#ef4444',
-				warn: '#eab308',
-				'primary-hover': '#1d4ed8',
-				'primary-content': '#ffffff',
-				'default-hover': '#f3f4f6',
-				'default-content': '#1f2937',
-				'danger-hover': '#b91c1c',
-				'danger-content': '#ffffff',
-				'secondary-content': '#545455',
-				'info-content': '#1d4ed8',
-				'info-secondary-content': '#2563eb',
-				'info-icon': '#60a5fa',
-				'success-content': '#166534',
-				'success-secondary-content': '#15803d',
-				'success-icon': '#4ade80',
-				'error-content': '#991b1b',
-				'error-secondary-content': '#b91c1c',
-				'error-icon': '#f87171',
-				'warn-content': '#854d0e',
-				'warn-secondary-content': '#a16207',
-				'warn-icon': '#facc15'
-			},
-		 }],
+          // Optional
+          content: "#1E293B", // Un azul muy oscuro para el texto
+          info: "#3B82F6", // Un azul medio para información
+          success: "#22C55E", // Verde brillante para los éxitos
+          error: "#DC2626", // Rojo para los errores
+          warn: "#F59E0B", // Naranja para las advertencias
+          "primary-hover": "#2563EB", // Un azul ligeramente más claro para hover en los botones primarios
+          "primary-content": "#FFFFFF", // Blanco para el contenido sobre el color primario
+          "default-hover": "#BAE6FD", // Un azul cielo para el hover por defecto
+          "default-content": "#1E3A8A", // Un azul oscuro para el contenido por defecto
+          "danger-hover": "#B91C1C", // Un rojo más oscuro para hover en botones de peligro
+          "danger-content": "#FFFFFF", // Blanco para el contenido sobre el color de peligro
+          "secondary-content": "#64748B", // Un azul grisáceo para contenido secundario
+          "info-content": "#BFDBFE", // Un azul claro para el contenido informativo
+          "info-secondary-content": "#93C5FD", // Un azul más claro para contenido secundario informativo
+          "info-icon": "#BFDBFE", // Un azul claro para íconos informativos
+          "success-content": "#14532D", // Un verde oscuro para contenido de éxito
+          "success-secondary-content": "#166534", // Un verde medio para contenido secundario de éxito
+          "success-icon": "#10B981", // Un verde claro para íconos de éxito
+          "error-content": "#7F1D1D", // Un rojo oscuro para contenido de error
+          "error-secondary-content": "#991B1B", // Un rojo más oscuro para contenido secundario de error
+          "error-icon": "#F87171", // Un rojo claro para íconos de error
+          "warn-content": "#92400E", // Un marrón claro para contenido de advertencia
+          "warn-secondary-content": "#F97316", // Un naranja para contenido secundario de advertencia
+          "warn-icon": "#FBBF24", // Un amarillo para íconos de advertencia
+        },
+      },
+    ],
   },
 };
 
