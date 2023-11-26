@@ -19,12 +19,14 @@
   }
 
   let y: number;
-
-  $: console.log(y);
 </script>
 <svelte:window bind:scrollY="{y}"/>
+<svelte:head>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' />
+</svelte:head>
+
 <Layout class="h-full">
-  <Layout.Header class="fixed top-0 z-0 px-3 transition-colors {$page.route.id === '/' && y < 100 ? '!bg-transparent shadow-none' : 'shadow-md'}">
+  <Layout.Header class="fixed top-0 z-[1] px-3 transition-colors {$page.route.id === '/' && y < 100 ? '!bg-transparent shadow-none' : 'shadow-md'}">
     <Button type="primary" on:click="{openDrawer}" shape="circle">
         <Icon src="{Bars3}" class="h-5 w-5"/>
     </Button>
