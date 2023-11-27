@@ -111,8 +111,7 @@
               <Card.Content slot="content">
                 <Media>
                   <Media.Content>
-                    <Media.Content.Title>{special.title}</Media.Content.Title
-                    >
+                    <Media.Content.Title>{special.title}</Media.Content.Title>
                     <Media.Content.Description
                       >{special.desc}</Media.Content.Description
                     >
@@ -133,7 +132,9 @@
         <!-- Horario de atención -->
         <div class="w-full md:w-1/2 px-4 mb-4">
           <article>
-            <h2 class="font-bold text-2xl mb-3 gradient">Horario de Atención</h2>
+            <h2 class="font-bold text-2xl mb-3 gradient">
+              Horario de Atención
+            </h2>
             <p class="text-gray-600">Lunes a Viernes: 9am - 9pm</p>
             <p class="text-gray-600">Sábados: 10am - 8pm</p>
             <p class="text-gray-600">Domingos: Cerrado</p>
@@ -143,7 +144,9 @@
         <!-- Información de contacto -->
         <div class="w-full md:w-1/2 px-4">
           <address>
-            <h2 class="font-bold text-2xl mb-3 gradient">Información de Contacto</h2>
+            <h2 class="font-bold text-2xl mb-3 gradient">
+              Información de Contacto
+            </h2>
             <p class="text-gray-600">Teléfono: +1 234 567 8900</p>
             <p class="text-gray-600">Email: contacto@turestaurante.com</p>
             <p class="text-gray-600">
