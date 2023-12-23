@@ -1,8 +1,10 @@
 <script lang="ts">
   import { Badge, Button, Drawer, Dropdown, List, Portal } from "stwui";
-  import { EllipsisHorizontal, Icon } from "svelte-hero-icons";
   import { page } from "$app/stores";
+  import {Icon} from "@steeze-ui/svelte-icon"
+  import {EllipsisHorizontal} from "@steeze-ui/heroicons"
 
+  
   export let open: boolean = true;
   const handleClose: () => void = () => {
     open = false;
