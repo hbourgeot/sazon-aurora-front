@@ -1,7 +1,7 @@
 <script lang="ts">
   // Third Components
-  import { Button, Layout, Swap } from "stwui";
-  import { Icon, Bars3, XCircle } from "svelte-hero-icons";
+  import {Button, Layout} from "stwui";
+  import {Bars3, Icon} from "svelte-hero-icons";
 
   // My components
   import Sidebar from "$lib/components/Sidebar.svelte";
@@ -10,7 +10,7 @@
   import "@fontsource-variable/raleway";
   import "@fontsource/kaushan-script"
   import "../app.pcss";
-  import { page } from "$app/stores";
+  import {page} from "$app/stores";
 
   // Code
   let drawer: {open: boolean} = {open: false};

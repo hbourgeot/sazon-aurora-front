@@ -10,11 +10,20 @@ declare global {
 
     interface Locals {
       svelxios: AxiosInstance;
+      user: User
     }
   
 		// interface PageData {}
 		// interface Platform {}
 	}
+}
+
+interface User {
+    id: number;
+    email: string;
+    name: string;
+    role: number;
+    document: string;
 }
 
 export {};
