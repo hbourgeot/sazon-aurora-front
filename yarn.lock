@@ -268,10 +268,20 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
-"@steeze-ui/heroicons@^2.2.2":
+"@steeze-ui/heroicons@^2.2.3":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@steeze-ui/heroicons/-/heroicons-2.2.3.tgz#202c8581f13ba9cf4b06bad757dc7771de47b3d3"
   integrity sha512-bv4YK375U9TDS50SmJ5VdFy2UmMhgKbJCCbo6IUU3qs2luEj2VX6sQoDy96j8AIKttxMd62ih1j0lZj7CTjIfA==
+
+"@steeze-ui/remix-icons@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@steeze-ui/remix-icons/-/remix-icons-1.1.1.tgz#b8f75e0cf53a28165345f29f3db51a108c8660b1"
+  integrity sha512-oRkWg1xMwhAs0UTJMTl36Kq+pr4B3NQvEFyTjZT62Dd0XDhkiHjOAEqA3k1iZLsec/bfhBl63pfkSZ9Yi52S2A==
+
+"@steeze-ui/svelte-icon@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@steeze-ui/svelte-icon/-/svelte-icon-1.5.0.tgz#806600ff37f3bdc7d70c51002d8fa6bd6db4d3d3"
+  integrity sha512-Y0S7Qk2kO6byzOlD5SQGbOF2ZaKXJgfTkH78QUPcq579wiWMQJ5H14zL4XwtsPJ0DfkoL5qa3WaIdYkWb9A6AA==
 
 "@sveltejs/adapter-auto@^2.0.0":
   version "2.1.1"
@@ -1407,13 +1417,6 @@ svelte-check@^3.6.0:
     sade "^1.7.4"
     svelte-preprocess "^5.1.0"
     typescript "^5.0.3"
-
-svelte-hero-icons@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/svelte-hero-icons/-/svelte-hero-icons-5.0.0.tgz#a3c46156af7c68c70be2350ecfe866b3de4122e0"
-  integrity sha512-xKMI/Z0f/6831I0R1YKJjVbAw9VBD6XKysvng6LtomlS4n3ZD1lZNAfLrrCmnc1pmiLr/8sVeQA8kgHLQwYlRg==
-  dependencies:
-    "@steeze-ui/heroicons" "^2.2.2"
 
 svelte-hmr@^0.15.3:
   version "0.15.3"

@@ -1,8 +1,11 @@
 <script lang="ts">
-  import { Avatar, Badge, Button, Drawer, Dropdown, List, Portal } from "stwui";
-  import { EllipsisHorizontal, Icon, Trash } from "svelte-hero-icons";
+  import { Badge, Button, Drawer, Dropdown, List, Portal } from "stwui";
+  import { page } from "$app/stores";
+  import {Icon} from "@steeze-ui/svelte-icon"
+  import {EllipsisHorizontal} from "@steeze-ui/heroicons"
 
-  export let open: boolean = false;
+  
+  export let open: boolean = true;
   const handleClose: () => void = () => {
     open = false;
   };
@@ -19,14 +22,12 @@
     },
   ];
 
-  const items = [
-    {
-      avatar:
-        "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      title: "Calvin Hawkins",
-      description: "calvin.hawkins@example.com",
-    },
-  ];
+  const user = {
+    avatar:
+      "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    title: "Calvin Hawkins",
+    description: "calvin.hawkins@example.com",
+  };
 
   let visible2 = false;
 
@@ -47,11 +48,11 @@
       </Drawer.Header>
       <Drawer.Content>
         <List>
-          {#each menuItems as item}
+          {#each menuItems as user}
             <List.Item>
               <List.Item.Content slot="content">
                 <List.Item.Content.Description class="w-full" slot="title"
-                  ><a href="/" class="w-full block">{item.title}</a>
+                  ><a href="/" class="w-full block">{user.title}</a>
                 </List.Item.Content.Description>
               </List.Item.Content>
             </List.Item>
@@ -59,18 +60,18 @@
         </List>
       </Drawer.Content>
       <Drawer.Footer>
-        <List>
-          {#each items as item}
+        {#if $page.data.logged}
+          <List>
             <List.Item>
               <List.Item.Leading slot="leading">
-                <List.Item.Leading.Avatar slot="avatar" src="{item.avatar}" />
+                <List.Item.Leading.Avatar slot="avatar" src="{user.avatar}" />
               </List.Item.Leading>
               <List.Item.Content slot="content" class="relative">
                 <List.Item.Content.Title slot="title"
-                  >{item.title}</List.Item.Content.Title
+                  >{user.title}</List.Item.Content.Title
                 >
                 <List.Item.Content.Description slot="description">
-                  {item.description}
+                  {user.description}
                 </List.Item.Content.Description>
               </List.Item.Content>
 
@@ -79,9 +80,10 @@
                   slot="trigger"
                   shape="circle"
                   type="ghost"
-                  on:click="{toggleDropdown2}"><Icon src={EllipsisHorizontal} class="h-5 w-5"/></Button
+                  on:click="{toggleDropdown2}"
+                  ><Icon src="{EllipsisHorizontal}" class="h-5 w-5" /></Button
                 >
-                <Dropdown.Items slot="items" alignment="center">
+                <Dropdown.Items slot="users" alignment="center">
                   <Dropdown.Items.Item
                     on:click="{closeDropdown2}"
                     label="Item 1"
@@ -103,8 +105,17 @@
                 </Dropdown.Items>
               </Dropdown>
             </List.Item>
-          {/each}
-        </List>
+          </List>
+        {:else}
+          <div class="tw-flex gap-x-4">
+            <Button shape="rounded" type="default" href="/login" >
+              Iniciar sesión
+            </Button>
+            <Button shape="rounded" type="primary" href="/registro">
+              Registrarse
+            </Button>
+          </div>
+        {/if}
       </Drawer.Footer>
     </Drawer>
   {/if}

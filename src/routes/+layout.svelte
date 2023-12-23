@@ -1,7 +1,8 @@
 <script lang="ts">
   // Third Components
-  import { Button, Layout, Swap } from "stwui";
-  import { Icon, Bars3, XCircle } from "svelte-hero-icons";
+  import {Button, Layout} from "stwui";
+  import {Bars3} from "@steeze-ui/heroicons"
+  import {Icon} from "@steeze-ui/svelte-icon";
 
   // My components
   import Sidebar from "$lib/components/Sidebar.svelte";
@@ -10,7 +11,7 @@
   import "@fontsource-variable/raleway";
   import "@fontsource/kaushan-script"
   import "../app.pcss";
-  import { page } from "$app/stores";
+  import {page} from "$app/stores";
 
   // Code
   let drawer: {open: boolean} = {open: false};
@@ -26,7 +27,7 @@
 </svelte:head>
 
 <Layout class="h-full">
-  <Layout.Header class="fixed top-0 z-[1] px-3 transition-colors {$page.route.id === '/' && y < 100 ? '!bg-transparent shadow-none' : 'shadow-md'}">
+  <Layout.Header class="top-0 z-[1] px-3 transition-colors {$page.route.id === '/' && y < 100 ? '!bg-transparent shadow-none fixed' : 'shadow-md sticky top-0'}">
     <Button type="primary" on:click="{openDrawer}" shape="circle">
         <Icon src="{Bars3}" class="h-5 w-5"/>
     </Button>
