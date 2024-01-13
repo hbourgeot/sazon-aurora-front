@@ -4,6 +4,7 @@
     import {formatNumber} from "stwui/utils";
     import {Icon} from "@steeze-ui/svelte-icon";
     import {Heart, Inbox, Truck, User} from "@steeze-ui/heroicons";
+    import { barGraph } from '$lib/assets';
 
     export let data: PageData;
 
@@ -12,7 +13,7 @@
 </script>
 <div class="w-full flex justify-evenly items-center">
     <section class="grid md:grid-cols-2 gap-2 w-1/2">
-        <Statistic class="w-full relative">
+        <Statistic class="w-full relative h-fit row-span-2">
             <Statistic.Title slot="title">Ventas totales</Statistic.Title>
             <Icon src="{Heart}" theme="solid" class="h-10 w-10 text-primary absolute top-2 right-2"/>
             <Statistic.Value class="text-primary" slot="value">
@@ -23,6 +24,7 @@
                     minimumFractionDigits: 1
                 })}
             </Statistic.Value>
+            <img src="{barGraph}" alt="bar" class="w-full h-full p-1"/>
         </Statistic>
         <Statistic class="w-full relative">
             <Statistic.Title slot="title">Clientes satisfechos</Statistic.Title>
@@ -46,7 +48,7 @@
                 </Statistic.Comparison.Value>
             </Statistic.Comparison>
         </Statistic>
-        <Statistic class="w-full relative">
+        <Statistic class="w-full relative row-span-2 h-fit">
             <Statistic.Title slot="title">Productos en almacén</Statistic.Title>
             <Icon src="{Inbox}" theme="solid" class="h-10 w-10 text-primary absolute top-2 right-2"/>
             <Statistic.Value class="text-primary" slot="value">
@@ -57,6 +59,7 @@
                     minimumFractionDigits: 1
                 })}
             </Statistic.Value>
+            <img src="{barGraph}" alt="bar" class="w-full h-full p-1"/>
         </Statistic>
         <Statistic class="w-full relative">
             <Statistic.Title slot="title">Proveedores en camino</Statistic.Title>
