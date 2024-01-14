@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Badge, Button, Drawer, Dropdown, List, Portal } from "stwui";
   import { page } from "$app/stores";
-  import {Icon} from "@steeze-ui/svelte-icon"
-  import {EllipsisHorizontal, EllipsisVertical} from "@steeze-ui/heroicons"
-
+  import { EllipsisVertical } from "@steeze-ui/heroicons";
+  import { Icon } from "@steeze-ui/svelte-icon";
+  import { Badge, Button, Drawer, Dropdown, List, Portal } from "stwui";
+  import {onMount} from "svelte";
 
   export let open: boolean = true;
   const handleClose: () => void = () => {
@@ -13,12 +13,15 @@
   const menuItems = [
     {
       title: "Nuestro menú",
+      href: ''
     },
     {
       title: "Ver tu carrito",
+      href: ''
     },
     {
       title: "Sobre nosotros",
+      href: ''
     },
   ];
 
@@ -31,6 +34,15 @@
   function toggleDropdown2() {
     visible = !visible;
   }
+
+  onMount(() => {
+    if($page.data?.session?.user) {
+      menuItems.push({
+        title: "Inicio administrador",
+        href: '/dashboard'
+      })
+    }
+  });
 </script>
 
 <Portal>
@@ -41,11 +53,11 @@
       </Drawer.Header>
       <Drawer.Content>
         <List>
-          {#each menuItems as user}
+          {#each menuItems as item}
             <List.Item>
               <List.Item.Content slot="content">
                 <List.Item.Content.Description class="w-full" slot="title"
-                  ><a href="/" class="w-full block">{user.title}</a>
+                  ><a href="{item.href}" class="w-full block">{item.title}</a>
                 </List.Item.Content.Description>
               </List.Item.Content>
             </List.Item>

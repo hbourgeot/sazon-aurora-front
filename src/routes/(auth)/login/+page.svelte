@@ -29,7 +29,7 @@
     };
 
     onMount(() => {
-        if(data.session.user) goto('/dashboard');
+        if(data?.session?.user) goto('/dashboard');
     })
 </script>
 

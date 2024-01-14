@@ -1,73 +1,161 @@
 <script lang="ts">
-    import type {PageData} from './$types';
-    import {Statistic} from "stwui";
-    import {formatNumber} from "stwui/utils";
-    import {Icon} from "@steeze-ui/svelte-icon";
-    import {Heart, Inbox, Truck, User} from "@steeze-ui/heroicons";
-    import { barGraph } from '$lib/assets';
+  import type { PageData } from "./$types";
+  import { Statistic, Button, Card } from "stwui";
+  import { formatNumber } from "stwui/utils";
+  import { Icon } from "@steeze-ui/svelte-icon";
+  import { ChevronRight } from "@steeze-ui/heroicons";
+  import { Heart, Inbox, Truck, User } from "@steeze-ui/heroicons";
+  import { barGraph } from "$lib/assets";
 
-    export let data: PageData;
-
-    console.log(data.session?.user?.user_metadata)
-
+  export let data: PageData;
 </script>
-<div class="w-full flex justify-evenly items-center">
-    <section class="grid md:grid-cols-2 gap-2 w-1/2">
-        <Statistic class="w-full relative h-fit row-span-2">
-            <Statistic.Title slot="title">Ventas totales</Statistic.Title>
-            <Icon src="{Heart}" theme="solid" class="h-10 w-10 text-primary absolute top-2 right-2"/>
-            <Statistic.Value class="text-primary" slot="value">
-                {formatNumber(25660000, {
-                    style: 'decimal',
-                    notation: 'compact',
-                    maximumFractionDigits: 1,
-                    minimumFractionDigits: 1
-                })}
-            </Statistic.Value>
-            <img src="{barGraph}" alt="bar" class="w-full h-full p-1"/>
-        </Statistic>
-        <Statistic class="w-full relative">
-            <Statistic.Title slot="title">Clientes satisfechos</Statistic.Title>
-            <Icon src="{User}" theme="solid" class="h-10 w-10 text-primary absolute top-2 right-2"/>
-            <Statistic.Value class="text-primary" slot="value">
-                {formatNumber(23548, {
-                    style: 'decimal',
-                    notation: 'compact',
-                    maximumFractionDigits: 1,
-                    minimumFractionDigits: 1
-                })}
-            </Statistic.Value>
-            <Statistic.Comparison slot="comparison">
-                <Statistic.Comparison.Value slot="value">
-                    Último año: {formatNumber(10293, {
-                    style: 'decimal',
-                    notation: 'compact',
-                    maximumFractionDigits: 1,
-                    minimumFractionDigits: 1
-                })}
-                </Statistic.Comparison.Value>
-            </Statistic.Comparison>
-        </Statistic>
-        <Statistic class="w-full relative row-span-2 h-fit">
-            <Statistic.Title slot="title">Productos en almacén</Statistic.Title>
-            <Icon src="{Inbox}" theme="solid" class="h-10 w-10 text-primary absolute top-2 right-2"/>
-            <Statistic.Value class="text-primary" slot="value">
-                {formatNumber(248394, {
-                    style: 'decimal',
-                    notation: 'compact',
-                    maximumFractionDigits: 1,
-                    minimumFractionDigits: 1
-                })}
-            </Statistic.Value>
-            <img src="{barGraph}" alt="bar" class="w-full h-full p-1"/>
-        </Statistic>
-        <Statistic class="w-full relative">
-            <Statistic.Title slot="title">Proveedores en camino</Statistic.Title>
-            <Icon src="{Truck}" theme="solid" class="h-10 w-10 text-primary absolute top-2 right-2"/>
-            <Statistic.Value class="text-primary" slot="value">
-                25
-            </Statistic.Value>
-        </Statistic>
+
+<main class="w-full p-3">
+  <h2 class="text-4xl p-2">
+    Hola,
+    <span class="gradient">
+      {data.session?.user?.user_metadata.name ?? "fulanito"}
+    </span>
+  </h2>
+  <div
+    class="w-full flex md:flex-row flex-col justify-center items-center p-2 mt-4 gap-5"
+  >
+    <section class="grid md:grid-cols-2 gap-2 w-3/5">
+      <Statistic class="w-full relative h-fit row-span-2">
+        <Statistic.Title slot="title">Ventas totales</Statistic.Title>
+        <Icon
+          src={Heart}
+          theme="solid"
+          class="h-10 w-10 text-primary absolute top-4 right-4"
+        />
+        <Statistic.Value class="text-primary" slot="value">
+          {formatNumber(25660000, {
+            style: "decimal",
+            notation: "compact",
+            maximumFractionDigits: 1,
+            minimumFractionDigits: 1,
+          })}
+        </Statistic.Value>
+        <img src={data.ventasImg} alt="bar" class="w-full h-full p-1" />
+        <Button
+          type="link"
+          shape="rounded"
+          href="/dashboard/platillos"
+          class="w-full flex justify-end gap-x-1"
+        >
+          Ver platillos <Icon src={ChevronRight} class="h-4 w-4" />
+        </Button>
+      </Statistic>
+      <Statistic class="w-full relative">
+        <Statistic.Title slot="title">Clientes satisfechos</Statistic.Title>
+        <Icon
+          src={User}
+          theme="solid"
+          class="h-10 w-10 text-primary absolute top-4 right-4"
+        />
+        <Statistic.Value class="text-primary" slot="value">
+          {formatNumber(23548, {
+            style: "decimal",
+            notation: "compact",
+            maximumFractionDigits: 1,
+            minimumFractionDigits: 1,
+          })}
+        </Statistic.Value>
+        <Button
+          type="link"
+          shape="rounded"
+          href="/dashboard/clientes"
+          class="w-full flex justify-end gap-x-1"
+        >
+          Ver clientes <Icon src={ChevronRight} class="h-4 w-4" />
+        </Button>
+      </Statistic>
+      <Statistic class="w-full relative row-span-2 h-fit">
+        <Statistic.Title slot="title">Productos en almacén</Statistic.Title>
+        <Icon
+          src={Inbox}
+          theme="solid"
+          class="h-10 w-10 text-primary absolute top-4 right-4"
+        />
+        <Statistic.Value class="text-primary" slot="value">
+          {formatNumber(248394, {
+            style: "decimal",
+            notation: "compact",
+            maximumFractionDigits: 1,
+            minimumFractionDigits: 1,
+          })}
+        </Statistic.Value>
+        <img src={data.productosImg} alt="bar" class="w-full h-full p-1" />
+        <Button
+          type="link"
+          shape="rounded"
+          href="/dashboard/productos"
+          class="w-full flex justify-end gap-x-1"
+        >
+          Ver productos <Icon src={ChevronRight} class="h-4 w-4" />
+        </Button>
+      </Statistic>
+      <Statistic class="w-full relative">
+        <Statistic.Title slot="title">Proveedores en camino</Statistic.Title>
+        <Icon
+          src={Truck}
+          theme="solid"
+          class="h-10 w-10 text-primary absolute top-4 right-4"
+        />
+        <Statistic.Value class="text-primary" slot="value">25</Statistic.Value>
+        <Button
+          type="link"
+          shape="rounded"
+          href="/dashboard/proveedores"
+          class="w-full flex justify-end gap-x-1"
+        >
+          Ver proveedores <Icon src={ChevronRight} class="h-4 w-4" />
+        </Button>
+      </Statistic>
     </section>
-    <h2>Hola, {data.session?.user?.user_metadata.name ?? 'fulanito'}</h2>
-</div>
+    <section class="w-2/5 grid md:grid-cols-2 gap-x-2 gap-y-6">
+      <h3 class="text-3xl col-span-2 text-center">Acciones rápidas</h3>
+      <a href="/dashboard/menu">
+        <Card hoverable>
+          <Card.Content slot="content" class="flex gap-x-2 items-center w-full justify-between text-xl"
+            >Menú <Icon src={ChevronRight} class="h-4 w-4" /></Card.Content
+          >
+        </Card>
+      </a>
+      <a href="/dashboard/menu">
+        <Card hoverable>
+          <Card.Content slot="content" class="flex gap-x-2 items-center w-full justify-between text-xl"
+            >Pedidos <Icon src={ChevronRight} class="h-4 w-4" /></Card.Content
+          >
+        </Card>
+      </a>
+      <a href="/dashboard/menu" class="col-span-2">
+        <Card hoverable>
+          <Card.Content slot="content" class="flex gap-x-2 items-center w-full justify-between text-xl"
+            >Calificaciones de clientes <Icon
+              src={ChevronRight}
+              class="h-4 w-4"
+            /></Card.Content
+          >
+        </Card>
+      </a>
+      <a href="/dashboard/menu">
+        <Card hoverable>
+          <Card.Content slot="content" class="flex gap-x-2 items-center w-full justify-between text-xl"
+            >Metodos de pago <Icon
+              src={ChevronRight}
+              class="h-4 w-4"
+            /></Card.Content
+          >
+        </Card>
+      </a>
+      <a href="/dashboard/menu">
+        <Card hoverable>
+          <Card.Content slot="content" class="flex gap-x-2 items-center w-full justify-between text-xl"
+            >Personal <Icon src={ChevronRight} class="h-4 w-4" /></Card.Content
+          >
+        </Card>
+      </a>
+    </section>
+  </div>
+</main>

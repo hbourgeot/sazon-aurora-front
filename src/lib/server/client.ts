@@ -1,10 +1,10 @@
 
-// import {baseUrl} from "$env/static/private"
+import {baseUrl} from "$env/static/private"
 import axios from "axios"
 import {debugResponse, debugRequest} from "$lib/utils/debugger"
 
 const client = axios.create({
-  baseURL: '',
+  baseURL: baseUrl,
 });
 
 client.interceptors.response.use(
