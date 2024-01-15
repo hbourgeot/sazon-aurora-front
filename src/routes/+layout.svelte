@@ -53,7 +53,7 @@
   }
   
   :global(.gradient){
-    background: linear-gradient(90deg, #33f 5%, #3f3 80%);
+    background: linear-gradient(90deg, #f33 5%, #838 80%);
     padding: 0 5px;
     background-clip: text;
     -webkit-background-clip: text;

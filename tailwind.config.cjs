@@ -17,33 +17,33 @@ const config = {
       {
         mytheme: {
           // Required
-          primary: "#1E40AF", // Un azul intenso para el color primario
-          default: "#E0F2FE", // Un azul muy claro para el color por defecto
-          danger: "#EF4444", // Rojo para los botones o elementos de alerta
+          primary: "#9B2226", // Rojo vino para el color primario
+          default: "#FFF8E1", // Beige suave para el color por defecto
+          danger: "#E5383B", // Rojo suave para los botones o elementos de alerta
           surface: "#FFFFFF", // Blanco para la superficie
-          background: "#EFF6FF", // Un azul pálido para el fondo
-          border: "#BFDBFE", // Un azul claro para los bordes
-          hover: "#60A5FA", // Un azul más claro para el estado hover
+          background: "#F5F5F5", // Gris claro para el fondo
+          border: "#A5A58D", // Marrón suave para los bordes
+          hover: "#F4A261", // Naranja suave para el estado hover
 
           // Optional
-          content: "#1E293B", // Un azul muy oscuro para el texto
-          info: "#3B82F6", // Un azul medio para información
-          success: "#22C55E", // Verde brillante para los éxitos
-          error: "#DC2626", // Rojo para los errores
+          content: "#1E293B", // Mantén el azul muy oscuro para el texto
+          info: "#3B82F6", // Azul medio para información (ajustar si necesario)
+          success: "#6B705C", // Verde oliva para los éxitos
+          error: "#DC2626", // Mantén el rojo para los errores
           warn: "#F59E0B", // Naranja para las advertencias
-          "primary-hover": "#2563EB", // Un azul ligeramente más claro para hover en los botones primarios
+          "primary-hover": "#831821", // Rojo vino más oscuro para hover en botones primarios
           "primary-content": "#FFFFFF", // Blanco para el contenido sobre el color primario
-          "default-hover": "#BAE6FD", // Un azul cielo para el hover por defecto
-          "default-content": "#1E3A8A", // Un azul oscuro para el contenido por defecto
+          "default-hover": "#F5DEB3", // Beige más oscuro para el hover por defecto
+          "default-content": "#6D4C41", // Marrón oscuro para el contenido por defecto
           "danger-hover": "#B91C1C", // Un rojo más oscuro para hover en botones de peligro
           "danger-content": "#FFFFFF", // Blanco para el contenido sobre el color de peligro
           "secondary-content": "#64748B", // Un azul grisáceo para contenido secundario
           "info-content": "#BFDBFE", // Un azul claro para el contenido informativo
           "info-secondary-content": "#93C5FD", // Un azul más claro para contenido secundario informativo
           "info-icon": "#BFDBFE", // Un azul claro para íconos informativos
-          "success-content": "#14532D", // Un verde oscuro para contenido de éxito
-          "success-secondary-content": "#166534", // Un verde medio para contenido secundario de éxito
-          "success-icon": "#10B981", // Un verde claro para íconos de éxito
+          "success-content": "#3D4035", // Verde oscuro para contenido de éxito
+          "success-secondary-content": "#495D4E", // Verde más oscuro para contenido secundario de éxito
+          "success-icon": "#4C665D", // Un verde medio para íconos de éxito
           "error-content": "#7F1D1D", // Un rojo oscuro para contenido de error
           "error-secondary-content": "#991B1B", // Un rojo más oscuro para contenido secundario de error
           "error-icon": "#F87171", // Un rojo claro para íconos de error
