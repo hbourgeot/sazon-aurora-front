@@ -21,7 +21,7 @@
     class="w-full flex md:flex-row flex-col justify-center items-center p-2 mt-4 gap-5"
   >
     <section class="grid md:grid-cols-2 gap-2 w-3/5">
-      <Statistic class="w-full relative h-fit row-span-2">
+      <Statistic class="w-full relative h-fit row-span-2" bordered="{false}">
         <Statistic.Title slot="title">Ventas totales</Statistic.Title>
         <Icon
           src={Heart}
@@ -46,7 +46,7 @@
           Ver platillos <Icon src={ChevronRight} class="h-4 w-4" />
         </Button>
       </Statistic>
-      <Statistic class="w-full relative">
+      <Statistic class="w-full relative" bordered="{false}">
         <Statistic.Title slot="title">Clientes satisfechos</Statistic.Title>
         <Icon
           src={User}
@@ -70,7 +70,7 @@
           Ver clientes <Icon src={ChevronRight} class="h-4 w-4" />
         </Button>
       </Statistic>
-      <Statistic class="w-full relative row-span-2 h-fit">
+      <Statistic class="w-full relative row-span-2 h-fit" bordered="{false}">
         <Statistic.Title slot="title">Productos en almacén</Statistic.Title>
         <Icon
           src={Inbox}
@@ -95,7 +95,7 @@
           Ver productos <Icon src={ChevronRight} class="h-4 w-4" />
         </Button>
       </Statistic>
-      <Statistic class="w-full relative">
+      <Statistic class="w-full relative" bordered="{false}">
         <Statistic.Title slot="title">Proveedores en camino</Statistic.Title>
         <Icon
           src={Truck}
@@ -116,21 +116,21 @@
     <section class="w-2/5 grid md:grid-cols-2 gap-x-2 gap-y-6">
       <h3 class="text-3xl col-span-2 text-center">Acciones rápidas</h3>
       <a href="/dashboard/menu">
-        <Card hoverable>
+        <Card hoverable bordered={false}>
           <Card.Content slot="content" class="flex gap-x-2 items-center w-full justify-between text-xl"
             >Menú <Icon src={ChevronRight} class="h-4 w-4" /></Card.Content
           >
         </Card>
       </a>
       <a href="/dashboard/menu">
-        <Card hoverable>
+        <Card hoverable bordered={false}>
           <Card.Content slot="content" class="flex gap-x-2 items-center w-full justify-between text-xl"
             >Pedidos <Icon src={ChevronRight} class="h-4 w-4" /></Card.Content
           >
         </Card>
       </a>
       <a href="/dashboard/menu" class="col-span-2">
-        <Card hoverable>
+        <Card hoverable bordered={false}>
           <Card.Content slot="content" class="flex gap-x-2 items-center w-full justify-between text-xl"
             >Calificaciones de clientes <Icon
               src={ChevronRight}
@@ -140,7 +140,7 @@
         </Card>
       </a>
       <a href="/dashboard/menu">
-        <Card hoverable>
+        <Card hoverable bordered={false}>
           <Card.Content slot="content" class="flex gap-x-2 items-center w-full justify-between text-xl"
             >Metodos de pago <Icon
               src={ChevronRight}
@@ -150,7 +150,7 @@
         </Card>
       </a>
       <a href="/dashboard/menu">
-        <Card hoverable>
+        <Card hoverable bordered={false}>
           <Card.Content slot="content" class="flex gap-x-2 items-center w-full justify-between text-xl"
             >Personal <Icon src={ChevronRight} class="h-4 w-4" /></Card.Content
           >
