@@ -26,7 +26,7 @@
   <link href='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' />
 </svelte:head>
 
-<Layout class="h-full">
+<Layout>
   <Layout.Header class="top-0 z-[1] px-3 transition-colors {$page.route.id === '/' && y < 100 ? '!bg-transparent shadow-none fixed' : 'shadow-md sticky top-0'}">
     <Button type="primary" on:click="{openDrawer}" shape="circle">
         <Icon src="{Bars3}" class="h-5 w-5"/>
@@ -61,4 +61,7 @@
     font-family: 'Kaushan Script', sans-serif;
   }
 
+:global(html, body){
+  height: calc(100% - 64px);
+}
 </style>

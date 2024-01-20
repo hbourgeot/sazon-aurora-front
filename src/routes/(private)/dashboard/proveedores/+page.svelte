@@ -1,7 +1,9 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-//   import Table from "$lib/components/Table.svelte";
+  //   import Table from "$lib/components/Table.svelte";
   import type { TableColumn } from "stwui/types";
+  import Table from "$lib/components/Table.svelte";
+  import FormDrawer4Providers from "$lib/components/FormDrawer4Providers.svelte";
 
   export let data: PageData;
 
@@ -38,32 +40,26 @@
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      name: "Proveedor 1",
-      contact: "Contacto 1",
-      contactType: "Tipo de contacto 1",
-      address: "Dirección 1",
-    },
-    {
-      id: 2,
-      name: "AProveedor 2",
-      contact: "Contacto 2",
-      contactType: "Tipo de contacto 2",
-      address: "Dirección 2",
-    },
-    {
-      id: 3,
-      name: "Proveedor 3",
-      contact: "Contacto 3",
-      contactType: "Tipo de contacto 3",
-      address: "Dirección 3",
-    },
-  ];
+  let rows = data.providers;
+  $: rows = data.providers;
+
+  let formData = {
+    name: "",
+    contact: "",
+    contact_type: "",
+    address: "",
+  };
 </script>
 
-<main class="w-full p-3">
-    <h1 class="text-4xl">Hola</h1>
-  <!-- <Table {rows} {columns} title="Proveedores" /> -->
+<main class="w-full h-full">
+  <h1 class="text-4xl p-5">Proveedores</h1>
+  <Table
+    {rows}
+    {columns}
+    title="Lista de proveedores registrados"
+    formAction="?/submit"
+    formTitle="Añadir proveedor"
+    FormComponent={FormDrawer4Providers}
+    {formData}
+  />
 </main>
