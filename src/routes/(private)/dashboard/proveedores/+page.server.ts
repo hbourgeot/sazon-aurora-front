@@ -17,5 +17,14 @@ export const actions: Actions = {
         const { data } = await svelxios.post('/provider/new', payload);
         console.log(data);
 
-    }
+  },
+  
+  edit: async ({ locals: { svelxios }, request }) => {
+    const payload = Object.fromEntries(await request.formData()) as Record<string, any>;
+
+    console.log(payload);
+    const { data } = await svelxios.put(`/provider/${payload.id}`, payload)
+
+    console.log(data);
+  }
 };

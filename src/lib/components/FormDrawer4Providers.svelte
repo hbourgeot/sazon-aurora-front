@@ -10,6 +10,12 @@
 
   let formFields = [
     {
+      label: "ID",
+      name: "id",
+      type: "hidden",
+      value: (data && data['id']) ?? null,
+    },
+    {
       label: "Nombre",
       name: "name",
       type: "text",
@@ -36,6 +42,12 @@
   ];
 
   $: formFields = [
+    {
+      label: "ID",
+      name: "id",
+      type: "hidden",
+      value: (data && data['id']) ?? null,
+    },
     {
       label: "Nombre",
       name: "name",
@@ -85,13 +97,13 @@
                 id={field.name}
                 name={field.name}
                 rows="5"
-                bind:value={field.value}
+                value={field.value}
               >
                 <TextArea.Label slot="label">{field.label}</TextArea.Label>
               </TextArea>
             {:else}
               <Input
-                class="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                class="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline {field.type==='hidden' ? 'invisible absolute top-0 -z-9999' : ''}}"
                 id={field.name}
                 name={field.name}
                 type={field.type}

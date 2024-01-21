@@ -76,8 +76,8 @@
     });
 </script>
 
-<main class="w-full">
-    <header class="flex justify-evenly items-center h-screen mx-auto">
+<main class="w-full h-fullx">
+    <header class="flex justify-evenly items-center mx-auto h-full">
         <section class="h-full w-screen grid place-content-center">
             <h2 class="text-2xl lg:text-4xl max-w-[27ch] text-center lg:text-left">
                 <span class="gradient text-3xl lg:text-5xl">{textoActual}</span>

@@ -22,6 +22,7 @@
   let baseUrl: string;
   let currentPage: string;
   let drawer = { open: false };
+  let dynamicFormTitle = formTitle;
 
   $: {
     baseUrl = $page.url.pathname;
@@ -40,11 +41,17 @@
 
   function edit(row: object) {
     formData = row;
+    console.log(formData)
+    formAction = "?/edit";
+    //@ts-ignore
+    dynamicFormTitle = `Editar ${formTitle} - ${row.name}`
     drawer.open = true;
   }
   
   function add() {
     formData = null;
+    formAction = "?/submit";
+    dynamicFormTitle = `Agregar ${formTitle}`;
     drawer.open = true;
   }
 
@@ -113,7 +120,7 @@
 
 <svelte:component
   this={FormComponent}
-  title={formTitle}
+  title={dynamicFormTitle}
   action={formAction}
   open={drawer.open}
   data={formData}

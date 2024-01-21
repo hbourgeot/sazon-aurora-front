@@ -44,6 +44,7 @@
   $: rows = data.providers;
 
   let formData = {
+    id: null,
     name: "",
     contact: "",
     contact_type: "",
@@ -58,7 +59,7 @@
     {columns}
     title="Lista de proveedores registrados"
     formAction="?/submit"
-    formTitle="Añadir proveedor"
+    formTitle="Proveedor"
     FormComponent={FormDrawer4Providers}
     {formData}
   />
