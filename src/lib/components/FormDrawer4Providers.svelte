@@ -89,7 +89,12 @@
         {title}
       </Drawer.Header>
       <Drawer.Content slot="content">
-        <form {action} use:enhance method="POST">
+        <form {action} use:enhance={({})=>{
+          return async ({update}) => {
+            await update();
+            open = false;
+          }
+        }} method="POST">
           {#each formFields as field}
             {#if field.type === "textarea"}
               <TextArea

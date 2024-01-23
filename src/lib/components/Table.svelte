@@ -1,9 +1,10 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
-  import { Plus } from "@steeze-ui/heroicons";
+  import { Plus, PlusCircle } from "@steeze-ui/heroicons";
   import { Icon } from "@steeze-ui/svelte-icon";
-  import { Button, Card, Pagination, Table } from "stwui";
+  import { Button, Card, Table } from "stwui";
+  import Pagination from "$lib/components/Pagination.svelte";
   import type { TableColumn } from "stwui/types";
   import { encodeSearchParams } from "stwui/utils";
 
@@ -67,6 +68,8 @@
     });
 
     data.total = data.results.length;
+    data.start = (parseInt(currentPage) - 1) * 25 + 1;
+    data.end = Math.min(parseInt(currentPage) * 25, data.total);
   }
 
   function onPreviousClick() {
@@ -131,9 +134,9 @@
     class="font-semibold text-lg flex justify-between items-center py-3"
   >
     {title}
-    <Button slot="extra" type="primary" on:click={() => (add())}>
-      <Icon src={Plus} class="h-5 w-5" />
-      New Item
+    <Button slot="extra" type="primary" on:click={() => (add())} class="flex justify-between items-center gap-x-1">
+      <Icon src={PlusCircle} class="h-5 w-5 font-bold" theme="solid"/>
+      Agregar
     </Button>
   </Card.Header>
   <Card.Content
@@ -160,6 +163,7 @@
           end={data.end}
           total={data.total}
           currentPage={parseInt(currentPage)}
+
           {onPreviousClick}
           {onNextClick}
           {onPageClick}
