@@ -105,6 +105,7 @@
 
   function filterOptions(newValue: string) {
     if (newValue) {
+      console.log(options);
       filtered = options.filter((opt) =>
         opt.toLowerCase().includes(newValue.toLowerCase()),
       );
@@ -142,7 +143,7 @@
                 id={field.name}
                 name={field.name}
                 rows="5"
-                bind:value={field.value}
+                value={field.value}
               >
                 <TextArea.Label slot="label">{field.label}</TextArea.Label>
               </TextArea>
@@ -152,7 +153,7 @@
                 id={field.name}
                 name={field.name}
                 type={field.type}
-                bind:value={field.value}
+                value={field.value}
               >
                 <InputNumber.Label slot="label">{field.label}</InputNumber.Label
                 >
@@ -161,7 +162,7 @@
               <Autocomplete
                 class="w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 name={field.name}
-                bind:value={field.value}
+                value={field.value}
                 on:input={filter}
               >
                 <Autocomplete.Label slot="label"
@@ -187,7 +188,7 @@
                 name={field.name}
                 type={field.type}
                 placeholder={field.label}
-                bind:value={field.value}
+                value={field.value}
               >
                 <Input.Label slot="label">{field.label}</Input.Label>
               </Input>
