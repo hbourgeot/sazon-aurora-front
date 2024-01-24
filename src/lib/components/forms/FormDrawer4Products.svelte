@@ -105,7 +105,6 @@
 
   function filterOptions(newValue: string) {
     if (newValue) {
-      console.log(options);
       filtered = options.filter((opt) =>
         opt.toLowerCase().includes(newValue.toLowerCase()),
       );

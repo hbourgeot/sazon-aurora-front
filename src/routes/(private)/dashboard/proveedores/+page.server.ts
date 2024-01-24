@@ -19,7 +19,6 @@ export const actions: Actions = {
     
 
     const { data } = await svelxios.post("/provider/new", payload);
-    console.log(data);
   },
 
   edit: async ({ locals: { svelxios }, request }) => {
@@ -28,9 +27,6 @@ export const actions: Actions = {
       any
     >;
 
-    console.log(payload);
     const { data } = await svelxios.put(`/provider/${payload.id}`, payload);
-
-    console.log(data);
   },
 };

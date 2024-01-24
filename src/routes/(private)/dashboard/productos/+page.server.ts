@@ -37,12 +37,10 @@ export const actions: Actions = {
       provider_id: providerId,
       stock: parseInt(payload.stock),
     };
-    console.log(payload);
     const { data: product } = await svelxios.post<Product>(
       "/product/new",
       payload
     );
-    console.log(product);
   },
 
   edit: async ({ locals: { svelxios }, request }) => {
@@ -59,10 +57,7 @@ export const actions: Actions = {
       stock: parseInt(payload.stock),
     };
 
-    console.log(payload);
     const { data } = await svelxios.put(`/product/${payload.id}`, payload);
-
-    console.log(data);
   },
 };
 

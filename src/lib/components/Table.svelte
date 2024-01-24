@@ -42,7 +42,6 @@
 
   function edit(row: object) {
     formData = row;
-    console.log(formData)
     formAction = "?/edit";
     //@ts-ignore
     dynamicFormTitle = `Editar ${formTitle} - ${row.name}`
