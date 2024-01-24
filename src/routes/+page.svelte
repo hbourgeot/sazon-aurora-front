@@ -76,7 +76,7 @@
     });
 </script>
 
-<main class="w-full h-fullx">
+<main class="w-full h-screen">
     <header class="flex justify-evenly items-center mx-auto h-full">
         <section class="h-full w-screen grid place-content-center">
             <h2 class="text-2xl lg:text-4xl max-w-[27ch] text-center lg:text-left">
