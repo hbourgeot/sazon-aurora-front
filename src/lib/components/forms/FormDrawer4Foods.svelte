@@ -41,20 +41,8 @@
       type: "number",
       value: (data && data["price"]) ?? "",
     },
-    {
-      name: "stock",
-      label: "Disponibles",
-      type: "number",
-      value: (data && data["stock"]) ?? "",
-    },
-    {
-      name: "provider_id",
-      label: "Proveedor",
-      type: "autocomplete",
-      value: (data && data["provider_id"]) ?? "",
-    },
   ];
-
+  
   $: formFields = [
     {
       name: "id",
@@ -75,19 +63,13 @@
       value: (data && data["description"]) ?? "",
     },
     {
-      name: "stock",
-      label: "Disponibles",
+      name: "price",
+      label: "Precio",
       type: "number",
-      value: (data && data["stock"]) ?? "",
-    },
-    {
-      name: "provider_id",
-      label: "Proveedor",
-      type: "autocomplete",
-      value: (data && data["provider_id"]) ?? "",
+      value: (data && data["price"]) ?? "",
     },
   ];
-
+  
   const handleClose: () => void = () => {
     open = false;
   };

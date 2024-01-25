@@ -12,8 +12,7 @@
 
 <main class="w-full p-3">
   <h2 class="text-4xl p-2">
-    Hola,
-    <span class="gradient">
+    Hola,<span class="gradient">
       {data.session?.user?.user_metadata.name ?? "fulanito"}
     </span>
   </h2>

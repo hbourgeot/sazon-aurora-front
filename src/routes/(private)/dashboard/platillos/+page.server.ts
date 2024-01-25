@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 
 export const load = (async ({ locals: { svelxios } }) => {
   const { data: dishes }: { data: Food[] } = await svelxios.get("/food/all");
+  console.log(dishes);
 
   const foods = dishes.map((dish) => ({
     id: dish.id,

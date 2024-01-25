@@ -5,9 +5,6 @@
     import {browser} from "$app/environment";
     import mapboxgl from "mapbox-gl";
     import {burger, cachapa, cesar} from "$lib/assets";
-    import type {PageData} from "./$types";
-
-    export let data: PageData;
 
     mapbox.accessToken =
         "pk.eyJ1IjoiaGJvdXJnZW90IiwiYSI6ImNscGVrYzNleDBlaTAyanF6bmNkeGFvbXQifQ.ccNVKHCjOECTaRyVmYiSfQ";

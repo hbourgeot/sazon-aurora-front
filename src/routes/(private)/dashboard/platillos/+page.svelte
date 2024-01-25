@@ -53,13 +53,13 @@
 </script>
 
 <main class="w-full h-full">
-  <h1 class="text-4xl p-5">Productos</h1>
+  <h1 class="text-4xl p-5">Platillos</h1>
   <Table
     {rows}
     {columns}
-    title="Lista de productos registrados"
+    title="Lista de platillos registrados"
     formAction="?/submit"
-    formTitle="Productos"
+    formTitle="platillos"
     FormComponent={FormDrawer4Foods}
     {formData}
   />
