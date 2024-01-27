@@ -1,10 +1,9 @@
-import type { Food } from "$lib/types";
+import { Product, type Food } from "$lib/types";
 import type { Actions, PageServerLoad } from "./$types";
 import dayjs from "dayjs";
 
 export const load = (async ({ locals: { svelxios } }) => {
   const { data: dishes }: { data: Food[] } = await svelxios.get("/food/all");
-  console.log(dishes);
 
   const foods = dishes.map((dish) => ({
     id: dish.id,
@@ -14,7 +13,10 @@ export const load = (async ({ locals: { svelxios } }) => {
     created_at: dayjs(dish.created_at).format("DD/MM/YYYY"),
   }));
 
-  return { foods };
+  const {data: products} = await svelxios.get<Product[]>("/product/all");
+
+  //@ts-ignore
+  return { foods, products: products.filter(product => product?.stock > 0)};
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
