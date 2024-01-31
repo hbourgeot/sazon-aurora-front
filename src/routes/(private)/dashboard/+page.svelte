@@ -11,15 +11,11 @@
 </script>
 
 <main class="w-full p-3">
-  <h2 class="text-4xl p-2">
-    Hola,<span class="gradient">
-      {data.session?.user?.user_metadata.name ?? "fulanito"}
-    </span>
-  </h2>
+  <h3 class="text-3xl px-2">Panel de acciones</h3>
   <div
     class="w-full flex md:flex-row flex-col justify-center items-center p-2 mt-4 gap-5"
   >
-    <section class="grid md:grid-cols-2 gap-2 w-3/5">
+  <section class="grid md:grid-cols-2 gap-2 w-3/5">
       <Statistic class="w-full relative h-fit row-span-2" bordered="{false}">
         <Statistic.Title slot="title">Ventas totales</Statistic.Title>
         <Icon

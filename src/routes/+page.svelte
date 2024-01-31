@@ -76,8 +76,9 @@
 <main class="w-full h-screen">
     <header class="flex justify-evenly items-center mx-auto h-full">
         <section class="h-full w-screen grid place-content-center">
-            <h2 class="text-2xl lg:text-4xl max-w-[27ch] text-center lg:text-left">
-                <span class="gradient text-3xl lg:text-5xl">{textoActual}</span>
+            <h1 class="text-3xl lg:text-5xl font-bold my-2">El sazón de <span class="gradient text-6xl font-extrabold">Aurora</span></h1>
+            <h2 class="text-xl lg:text-3xl max-w-[27ch] my-2 text-center lg:text-left">
+                <span class="gradient text-2xl lg:text-4xl">{textoActual}</span>
                 todo el sazón que te podemos ofrecer
             </h2>
             <div class="flex justify-between w-fit gap-x-4 py-2">
