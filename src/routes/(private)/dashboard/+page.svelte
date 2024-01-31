@@ -21,8 +21,7 @@
         <Icon
           src={Heart}
           theme="solid"
-          class="h-10 w-10 text-primary absolute top-4 right-4"
-        />
+          class="h-10 w-10 text-primary absolute top-4 right-4" />
         <Statistic.Value class="text-primary" slot="value">
           {formatNumber(25660000, {
             style: "decimal",
@@ -36,18 +35,16 @@
           type="link"
           shape="rounded"
           href="/dashboard/platillos"
-          class="w-full flex justify-end gap-x-1"
-        >
+          class="w-full flex justify-end gap-x-1">
           Ver platillos <Icon src={ChevronRight} class="h-4 w-4" />
         </Button>
       </Statistic>
-      <Statistic class="w-full relative" bordered="{false}">
+      <Statistic class="w-full relative" bordered={false}>
         <Statistic.Title slot="title">Clientes satisfechos</Statistic.Title>
         <Icon
           src={User}
           theme="solid"
-          class="h-10 w-10 text-primary absolute top-4 right-4"
-        />
+          class="h-10 w-10 text-primary absolute top-4 right-4" />
         <Statistic.Value class="text-primary" slot="value">
           {formatNumber(23548, {
             style: "decimal",
@@ -60,18 +57,16 @@
           type="link"
           shape="rounded"
           href="/dashboard/clientes"
-          class="w-full flex justify-end gap-x-1"
-        >
+          class="w-full flex justify-end gap-x-1">
           Ver clientes <Icon src={ChevronRight} class="h-4 w-4" />
         </Button>
       </Statistic>
-      <Statistic class="w-full relative row-span-2 h-fit" bordered="{false}">
+      <Statistic class="w-full relative row-span-2 h-fit" bordered={false}>
         <Statistic.Title slot="title">Productos en almacén</Statistic.Title>
         <Icon
           src={Inbox}
           theme="solid"
-          class="h-10 w-10 text-primary absolute top-4 right-4"
-        />
+          class="h-10 w-10 text-primary absolute top-4 right-4" />
         <Statistic.Value class="text-primary" slot="value">
           {formatNumber(248394, {
             style: "decimal",
@@ -85,25 +80,22 @@
           type="link"
           shape="rounded"
           href="/dashboard/productos"
-          class="w-full flex justify-end gap-x-1"
-        >
+          class="w-full flex justify-end gap-x-1">
           Ver productos <Icon src={ChevronRight} class="h-4 w-4" />
         </Button>
       </Statistic>
-      <Statistic class="w-full relative" bordered="{false}">
+      <Statistic class="w-full relative" bordered={false}>
         <Statistic.Title slot="title">Proveedores en camino</Statistic.Title>
         <Icon
           src={Truck}
           theme="solid"
-          class="h-10 w-10 text-primary absolute top-4 right-4"
-        />
+          class="h-10 w-10 text-primary absolute top-4 right-4" />
         <Statistic.Value class="text-primary" slot="value">25</Statistic.Value>
         <Button
           type="link"
           shape="rounded"
           href="/dashboard/proveedores"
-          class="w-full flex justify-end gap-x-1"
-        >
+          class="w-full flex justify-end gap-x-1">
           Ver proveedores <Icon src={ChevronRight} class="h-4 w-4" />
         </Button>
       </Statistic>
@@ -112,45 +104,57 @@
       <h3 class="text-3xl col-span-2 text-center">Acciones rápidas</h3>
       <a href="/dashboard/menu">
         <Card hoverable bordered={false}>
-          <Card.Content slot="content" class="flex gap-x-2 items-center w-full justify-between text-xl"
-            >Menú <Icon src={ChevronRight} class="h-4 w-4" /></Card.Content
-          >
+          <Card.Content
+            slot="content"
+            class="flex gap-x-2 items-center w-full justify-between text-xl">
+            Menú <Icon src={ChevronRight} class="h-4 w-4" />
+          </Card.Content>
         </Card>
       </a>
       <a href="/dashboard/menu">
         <Card hoverable bordered={false}>
-          <Card.Content slot="content" class="flex gap-x-2 items-center w-full justify-between text-xl"
-            >Pedidos <Icon src={ChevronRight} class="h-4 w-4" /></Card.Content
-          >
+          <Card.Content
+            slot="content"
+            class="flex gap-x-2 items-center w-full justify-between text-xl">
+            Pedidos <Icon src={ChevronRight} class="h-4 w-4" />
+          </Card.Content>
         </Card>
       </a>
       <a href="/dashboard/menu" class="col-span-2">
         <Card hoverable bordered={false}>
-          <Card.Content slot="content" class="flex gap-x-2 items-center w-full justify-between text-xl"
-            >Calificaciones de clientes <Icon
+          <Card.Content
+            slot="content"
+            class="flex gap-x-2 items-center w-full justify-between text-xl">
+            Calificaciones de clientes <Icon
               src={ChevronRight}
-              class="h-4 w-4"
-            /></Card.Content
-          >
+              class="h-4 w-4" />
+          </Card.Content>
         </Card>
       </a>
       <a href="/dashboard/menu">
         <Card hoverable bordered={false}>
-          <Card.Content slot="content" class="flex gap-x-2 items-center w-full justify-between text-xl"
-            >Metodos de pago <Icon
-              src={ChevronRight}
-              class="h-4 w-4"
-            /></Card.Content
-          >
+          <Card.Content
+            slot="content"
+            class="flex gap-x-2 items-center w-full justify-between text-xl">
+            Metodos de pago <Icon src={ChevronRight} class="h-4 w-4" />
+          </Card.Content>
         </Card>
       </a>
       <a href="/dashboard/menu">
         <Card hoverable bordered={false}>
-          <Card.Content slot="content" class="flex gap-x-2 items-center w-full justify-between text-xl"
-            >Personal <Icon src={ChevronRight} class="h-4 w-4" /></Card.Content
-          >
+          <Card.Content
+            slot="content"
+            class="flex gap-x-2 items-center w-full justify-between text-xl">
+            Personal <Icon src={ChevronRight} class="h-4 w-4" />
+          </Card.Content>
         </Card>
       </a>
     </section>
   </div>
 </main>
+
+<style>
+  main {
+    height: 100vh;
+  }
+</style>
