@@ -1,4 +1,4 @@
-import { Product, type Food } from "$lib/types";
+import type { Product, Food } from "$lib/types";
 import type { Actions, PageServerLoad } from "./$types";
 import dayjs from "dayjs";
 
@@ -13,29 +13,46 @@ export const load = (async ({ locals: { svelxios } }) => {
     created_at: dayjs(dish.created_at).format("DD/MM/YYYY"),
   }));
 
-  const {data: products} = await svelxios.get<Product[]>("/product/all");
+  const { data: products } = await svelxios.get<Product[]>("/product/all");
 
   //@ts-ignore
-  return { foods, products: products.filter(product => product?.stock > 0)};
+  return { foods, products: products.filter((product) => product?.stock > 0) };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
   submit: async ({ locals: { svelxios }, request }) => {
-    let payload = Object.fromEntries(await request.formData()) as Record<
-      string,
-      any
-    >;
+    const form = await request.formData();
+    let payload = Object.fromEntries(form) as Record<string, any>;
+
+    const products: { id: number; quantity: number }[] = form
+      .getAll("products")
+      .map((product) => {
+        const productParsed: { id: number; quantity: number } = JSON.parse(
+          product.toString()
+        );
+        return {
+          id: productParsed.id,
+          quantity: productParsed.quantity,
+        };
+      });
 
     payload = {
-      ...payload,
-      id: null,
+      name: payload.name,
+      description: payload.description,
+      price: parseFloat(payload.price),
+      created_at: dayjs().toISOString(),
     };
     console.log(payload);
-    const { data: product } = await svelxios.post<Food>(
-      "/food/new",
-      payload
-    );
-    console.log(product);
+    const { data: [food] }: {data: [Food, number]} = await svelxios.post("/food/new", payload);
+    console.log(food);
+
+    for (const product of products) {
+      const { data: idk } = await svelxios.post(
+        `/food/${food.id}/product/${product.id}`,
+        null,
+        { params: { quantity: product.quantity } }
+      );
+    }
   },
 
   edit: async ({ locals: { svelxios }, request }) => {

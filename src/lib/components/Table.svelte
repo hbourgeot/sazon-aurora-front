@@ -128,7 +128,7 @@
   open={drawer.open}
   data={formData}
 />
-<Card bordered={false} elevation="sm" class="p-2" style="height: calc(100% - 64px)">
+<Card bordered={false} elevation="lg" class="p-2 w-full height">
   <Card.Header
     slot="header"
     class="font-semibold text-lg flex justify-between items-center py-3"
@@ -141,10 +141,9 @@
   </Card.Header>
   <Card.Content
     slot="content"
-    class="p-0 sm:p-0"
-    style="height: calc(100% - 64px);"
+    class="p-0 sm:p-0 height-full"
   >
-    <Table class="rounded-md overflow-hidden h-full shadow-sm" {columns}>
+    <Table class="rounded-md overflow-hidden h-full shadow-none" {columns}>
       <Table.Header slot="header" {order} {orderBy} {onColumnHeaderClick}  class="bg-primary !text-light-50"/>
       <Table.Body slot="body">
         {#each data.results as item}
@@ -189,5 +188,13 @@
 
   :global(.stwui-table-header, .stwui-table-body-row-cell){
     text-align: center !important;
+  }
+
+  :global(.height){
+    height: 80%;
+  }
+
+  :global(.height-full){
+    height: 89%;
   }
 </style>

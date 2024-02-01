@@ -152,9 +152,3 @@
     </section>
   </div>
 </main>
-
-<style>
-  main {
-    height: 100vh;
-  }
-</style>

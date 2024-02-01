@@ -52,8 +52,8 @@
     };
 </script>
 
-<main class="w-full h-full">
-  <h1 class="text-4xl p-5">Platillos</h1>
+<main class="py-3 px-6 flex flex-col justify-center items-center h-full w-full">
+  <h1 class="text-4xl p-5 pb-2 !text-left w-full">Platillos</h1>
   <Table
     {rows}
     {columns}

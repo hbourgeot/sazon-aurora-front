@@ -21,7 +21,8 @@
   export let data: any | null;
 
   let productsSelected = writable<number[]>([]);
-  let products: (Product & {quantity: number})[] = $page.data.products;
+  let products: (Product & { quantity: number })[] = $page.data.products;
+  let productsHtml: (Product & { quantity: number })[] = [];
   let selectProducts: boolean = false;
   let formFields = [
     {
@@ -102,6 +103,12 @@
         return [...currentSelected, productId];
       }
     });
+
+    productsHtml = products.map((product) => {
+      if ($productsSelected.includes(product.id)) {
+        return { ...product, quantity: 1 };
+      }
+    });
   }
 </script>
 
@@ -114,7 +121,10 @@
       <Drawer.Content slot="content">
         <form
           {action}
-          use:enhance={({}) => {
+          use:enhance={({formData}) => {
+            for (const product of productsHtml) {
+              formData.append("products", JSON.stringify({ id: product.id, quantity: product.quantity }))
+            }
             return async ({ update }) => {
               await update();
               open = false;
@@ -163,20 +173,51 @@
                 Productos seleccionados
               </p>
               <ul class="list-disc list-inside">
-                {#each $productsSelected as productId}
-                  {@const productHtml = products.find(
-                    (p) => p.id === productId,
-                  )}
+                {#each productsHtml as productHtml}
                   {#if productHtml}
                     <li class="flex items-center justify-between">
                       <span>{productHtml.name}</span>
-                      <div class="flex items-center">
-                        <Button size="xs">-</Button>
+                      <div class="flex items-center my-1">
+                        <Button
+                          size="xs"
+                          type="default"
+                          class="text-white font-bold"
+                          disabled={productHtml.quantity <= 1}
+                          on:click={() => {
+                            if (productHtml.quantity < 1) {
+                              productHtml.quantity = 1;
+                            } else {
+                              productHtml.quantity--;
+                            }
+                          }}>
+                          -
+                        </Button>
                         <InputNumber
-                          class="mx-2"
-                          value={productHtml.quantity}
-                          min="0" />
-                        <Button size="xs">+</Button>
+                          class="w-[6ch] text-center"
+                          bind:value={productHtml.quantity}
+                          min="1"
+                          on:input={() => {
+                            if (productHtml.quantity >= productHtml?.stock) {
+                              productHtml.quantity = productHtml?.stock ?? 0;
+                            } else if(productHtml.quantity <= 1){
+                              productHtml.quantity = 1;
+                            }
+                          }}
+                          max={productHtml?.stock.toString() ?? 1000} />
+                        <Button
+                          size="xs"
+                          type="default"
+                          class="text-white font-bold"
+                          disabled={productHtml.quantity >= productHtml?.stock}
+                          on:click={() => {
+                            if (productHtml.quantity >= productHtml?.stock) {
+                              productHtml.quantity = productHtml?.stock ?? 0;
+                            } else {
+                              productHtml.quantity++;
+                            }
+                          }}>
+                          +
+                        </Button>
                       </div>
                     </li>
                   {/if}
@@ -214,6 +255,7 @@
                   <input
                     type="checkbox"
                     id={`product-${product.id}`}
+                    checked={$productsSelected.includes(product.id)}
                     class="text-red-500 rounded border-gray-300 focus:ring-red-500"
                     on:change={() => toggleProduct(product.id)} />
                   <label
