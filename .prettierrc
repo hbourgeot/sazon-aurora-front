@@ -3,5 +3,6 @@
   "useTabs": false,
   "singleQuote": false,
   "semi": true,
-  "svelteBracketNewLine": true
+  "svelteBracketNewLine": false,
+  "htmlWhitespaceSensitivity": "ignore"
 }

@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "dev",
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "type": "shell",
+      "label": "Open BackEnd Folder",
+      "command": "code",
+      "args": ["../sazon-aurora-back/"],
+      "windows": {
+        "command": "code.cmd",
+        "args": ["..\\sazon-aurora-back\\"]
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    }
+  ]
+}
