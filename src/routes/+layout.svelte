@@ -1,17 +1,14 @@
 <script lang="ts">
   // Third Components
-  import {Button, Layout} from "stwui";
-  import {Bars3} from "@steeze-ui/heroicons"
-  import {Icon} from "@steeze-ui/svelte-icon";
-
-  // My components
+  import { Bars3 } from "@steeze-ui/heroicons";
+  import { Icon } from "@steeze-ui/svelte-icon";
+  import { Button, Layout } from "stwui";
+// My components
   import Sidebar from "$lib/components/Sidebar.svelte";
-
   // Styles
   import "@fontsource-variable/raleway";
-  import "@fontsource/kaushan-script"
+  import "@fontsource/kaushan-script";
   import "../app.pcss";
-  import {page} from "$app/stores";
 
   // Code
   let drawer: {open: boolean} = {open: false};
@@ -27,14 +24,9 @@
 </svelte:head>
 
 <Layout>
-  <Layout.Header class="top-0 z-[1] px-3 transition-colors {$page.route.id === '/' && y < 100 ? '!bg-transparent shadow-none fixed' : 'shadow-md sticky top-0'}">
-    <Button type="primary" on:click="{openDrawer}" shape="circle">
-        <Icon src="{Bars3}" class="h-5 w-5"/>
+    <Button type="primary" on:click="{openDrawer}" shape="circle" class="absolute top-4 left-6 w-fit h-fit">
+        <Icon src="{Bars3}" class="!h-8 !w-8"/>
     </Button>
-    <Layout.Header.Extra slot="extra">
-      <h1 class="text-3xl font-semibold">La sazón de <span class="gradient font-extrabold">Aurora</span></h1>
-    </Layout.Header.Extra>
-  </Layout.Header>
   <Layout.Content>
     <Layout.Content.Body class="flex items-center justify-center min-h-[200px] w-full">
       <slot />
@@ -62,6 +54,6 @@
   }
 
 :global(html, body){
-  height: calc(100% - 64px);
+  height: 100vh;
 }
 </style>

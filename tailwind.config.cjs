@@ -18,7 +18,7 @@ const config = {
         mytheme: {
           // Required
           primary: "#9B2226", // Rojo vino para el color primario
-          default: "#FFF8E1", // Beige suave para el color por defecto
+          default: "#C07070", // Beige suave para el color por defecto
           danger: "#E5383B", // Rojo suave para los botones o elementos de alerta
           surface: "#FFFFFF", // Blanco para la superficie
           background: "#F5F5F5", // Gris claro para el fondo

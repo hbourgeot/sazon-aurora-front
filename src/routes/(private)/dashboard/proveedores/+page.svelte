@@ -3,7 +3,7 @@
   //   import Table from "$lib/components/Table.svelte";
   import type { TableColumn } from "stwui/types";
   import Table from "$lib/components/Table.svelte";
-  import FormDrawer4Providers from "$lib/components/FormDrawer4Providers.svelte";
+  import FormDrawer4Providers from "$lib/components/forms/FormDrawer4Providers.svelte";
 
   export let data: PageData;
 

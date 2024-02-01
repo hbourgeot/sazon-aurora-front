@@ -49,7 +49,7 @@
   {#if open}
     <Drawer {handleClose} placement="left">
       <Drawer.Header>
-        <h2 class="text-3xl">Menú</h2>
+        <h1 class="text-3xl font-semibold">El sazón de <span class="gradient font-extrabold">Aurora</span></h1>
       </Drawer.Header>
       <Drawer.Content>
         <List>
