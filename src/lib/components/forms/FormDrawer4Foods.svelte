@@ -1,24 +1,20 @@
 <script lang="ts">
-  import { browser } from "$app/environment";
   import { enhance } from "$app/forms";
   import { page } from "$app/stores";
   import type { Product } from "$lib/types";
-  import {
-    Autocomplete,
-    Button,
-    CheckboxGroup,
-    Drawer,
-    Input,
-    InputNumber,
-    Portal,
-    TextArea,
-  } from "stwui";
+  import { Button, Drawer, Input, InputNumber, Portal, TextArea } from "stwui";
+  import { formatNumber } from "stwui/utils";
   import { writable } from "svelte/store";
 
   export let open: boolean = false;
   export let title: string;
   export let action: string;
   export let data: any | null;
+
+  const dollar = `<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M18 8.5V8.35417C18 6.50171 16.4983 5 14.6458 5H9.5C7.567 5 6 6.567 6 8.5C6 10.433 7.567 12 9.5 12H14.5C16.433 12 18 13.567 18 15.5C18 17.433 16.433 19 14.5 19H9.42708C7.53436 19 6 17.4656 6 15.5729V15.5M12 3V21" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
 
   let productsSelected = writable<number[]>([]);
   let products: (Product & { quantity: number })[] = $page.data.products;
@@ -121,9 +117,12 @@
       <Drawer.Content slot="content">
         <form
           {action}
-          use:enhance={({formData}) => {
+          use:enhance={({ formData }) => {
             for (const product of productsHtml) {
-              formData.append("products", JSON.stringify({ id: product.id, quantity: product.quantity }))
+              formData.append(
+                "products",
+                JSON.stringify({ id: product.id, quantity: product.quantity }),
+              );
             }
             return async ({ update }) => {
               await update();
@@ -147,7 +146,9 @@
                 id={field.name}
                 name={field.name}
                 type={field.type}
-                value={field.value}>
+                value={field.value}
+                step="{0.01}">
+                <InputNumber.Leading slot="leading" data={dollar} fill="#fff" />
                 <InputNumber.Label slot="label">
                   {field.label}
                 </InputNumber.Label>
@@ -199,7 +200,7 @@
                           on:input={() => {
                             if (productHtml.quantity >= productHtml?.stock) {
                               productHtml.quantity = productHtml?.stock ?? 0;
-                            } else if(productHtml.quantity <= 1){
+                            } else if (productHtml.quantity <= 1) {
                               productHtml.quantity = 1;
                             }
                           }}

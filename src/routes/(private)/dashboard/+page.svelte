@@ -10,7 +10,7 @@
   export let data: PageData;
 </script>
 
-<main class="w-full p-3">
+<main class="w-full p-3 h-full flex flex-col justify-center items-center">
   <h3 class="text-3xl px-2">Panel de acciones</h3>
   <div
     class="w-full flex md:flex-row flex-col justify-center items-center p-2 mt-4 gap-5"

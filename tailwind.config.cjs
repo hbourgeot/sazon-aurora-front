@@ -34,7 +34,7 @@ const config = {
           "primary-hover": "#831821", // Rojo vino más oscuro para hover en botones primarios
           "primary-content": "#FFFFFF", // Blanco para el contenido sobre el color primario
           "default-hover": "#F5DEB3", // Beige más oscuro para el hover por defecto
-          "default-content": "#6D4C41", // Marrón oscuro para el contenido por defecto
+          "default-content": "#EEEEEE", // Marrón oscuro para el contenido por defecto
           "danger-hover": "#B91C1C", // Un rojo más oscuro para hover en botones de peligro
           "danger-content": "#FFFFFF", // Blanco para el contenido sobre el color de peligro
           "secondary-content": "#64748B", // Un azul grisáceo para contenido secundario
