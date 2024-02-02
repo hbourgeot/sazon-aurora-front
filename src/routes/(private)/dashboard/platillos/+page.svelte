@@ -4,11 +4,18 @@
 
   import type { TableColumn } from "stwui/types";
   import type { PageData } from "./$types";
+  import type { Crumb } from "$lib/types";
+  import { setBreadcrumbs } from "$lib/store/breadcrumbs.store";
 
   export let data: PageData;
 
   let rows = data.foods;
   $: rows = data.foods;
+
+  const routes: Crumb[] = [
+    { label: "Dashboard", href: "/dashboard" },
+    { label: "Platillos", href: "/dashboard/platillos" },
+  ];
 
   const columns: TableColumn[] = [
     {
@@ -50,6 +57,8 @@
         price: "",
         created_at: "",
     };
+
+    setBreadcrumbs(routes);
 </script>
 
 <main class="py-3 px-6 flex flex-col justify-center items-center h-full w-full">
