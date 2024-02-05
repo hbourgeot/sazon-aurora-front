@@ -1,9 +1,12 @@
-import type { Product, Food } from "$lib/types";
+import type { Product, Food, FoodProduct } from "$lib/types";
+import { fail } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import dayjs from "dayjs";
 
 export const load = (async ({ locals: { svelxios } }) => {
-  const { data: dishes }: { data: Food[] } = await svelxios.get("/food/all");
+  const { data: dishes }: { data: FoodProduct[] } = await svelxios.get(
+    "/food/all"
+  );
 
   const foods = dishes.map((dish) => ({
     id: dish.id,
@@ -11,12 +14,31 @@ export const load = (async ({ locals: { svelxios } }) => {
     description: dish.description,
     price: dish.price,
     created_at: dayjs(dish.created_at).format("DD/MM/YYYY"),
+    products:
+      dish.products.map((product) => product.product.name).join(", ").length > 1
+        ? dish.products.map((product) => product.product.name).join(", ")
+        : "No hay productos",
   }));
 
   const { data: products } = await svelxios.get<Product[]>("/product/all");
 
+  const foodsWithProducts = foods.map((food) => {
+    const foodProducts = dishes.find((dish) => dish.id === food.id)?.products;
+    const productsWithAmount = foodProducts?.map((product) => ({
+      ...product.product,
+      amount: product.amount,
+    }));
+    return { ...food, products: productsWithAmount };
+  });
+
   //@ts-ignore
-  return { foods, products: products.filter((product) => product?.stock > 0) };
+  return {
+    foods,
+    products: products.filter(
+      (product) => product?.stock > 0,
+      foodsWithProducts
+    ),
+  };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
@@ -42,8 +64,10 @@ export const actions: Actions = {
       price: parseFloat(payload.price),
       created_at: dayjs().toISOString(),
     };
-    console.log(payload);
-    const { data: [food] }: {data: [Food, number]} = await svelxios.post("/food/new", payload);
+
+    const {
+      data: [food],
+    }: { data: [Food, number] } = await svelxios.post("/food/new", payload);
     console.log(food);
 
     for (const product of products) {
@@ -56,20 +80,49 @@ export const actions: Actions = {
   },
 
   edit: async ({ locals: { svelxios }, request }) => {
-    let payload = Object.fromEntries(await request.formData()) as Record<
-      string,
-      any
-    >;
+    try {
+      const form = await request.formData();
+      let payload = Object.fromEntries(form) as Record<string, any>;
+      const foodId = Number(payload.id);
 
-    payload = {
-      ...payload,
-      id: parseInt(payload.id),
-      stock: parseInt(payload.stock),
-    };
+      payload = {
+        name: payload.name,
+        description: payload.description,
+        price: parseFloat(payload.price),
+        created_at: dayjs().toISOString(),
+      };
 
-    console.log(payload);
-    const { data } = await svelxios.put(`/food/${payload.id}`, payload);
+      console.log(payload);
+      const { data: food, status } = await svelxios.patch(
+        `/food/${foodId}`,
+        payload
+      );
 
-    console.log(data);
+      if (status >= 400) {
+        throw fail(status, food.message);
+      }
+
+      const products: { id: number; quantity: number }[] = form
+        .getAll("products")
+        .map((product) => {
+          const productParsed: { id: number; quantity: number } = JSON.parse(
+            product.toString()
+          );
+          return {
+            id: productParsed.id,
+            quantity: productParsed.quantity,
+          };
+        });
+
+      for (const product of products) {
+        const { data: idk } = await svelxios.post(
+          `/food/${foodId}/product/${product.id}`,
+          null,
+          { params: { quantity: product.quantity } }
+        );
+      }
+    } catch (error) {
+      console.error(error.response.data.detail);
+    }
   },
 };

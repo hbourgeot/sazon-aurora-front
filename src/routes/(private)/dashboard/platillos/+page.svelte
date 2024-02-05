@@ -48,6 +48,12 @@
       placement: "center",
       class: "",
     },
+    {
+      column: "products",
+      label: "Productos",
+      placement: "center",
+      class: "",
+    }
   ];
 
     let formData = {

@@ -75,6 +75,17 @@
     },
   ];
 
+  $: if (data?.products) {
+    const dataProducts = data.products.split(",");
+    for (let product of dataProducts) {
+      product = product.trim();
+      const productId = products.find((p) => p.name === product)?.id;
+      if (productId) {
+        toggleProduct(productId, true);
+      }
+    }
+  }
+
   const handleClose: () => void = () => {
     open = false;
     productsSelected.set([]);
@@ -88,7 +99,7 @@
     selectProducts = true;
   };
 
-  function toggleProduct(productId: number) {
+  async function toggleProduct(productId: number, forEdit: boolean = false) {
     productsSelected.update((currentSelected) => {
       const index = currentSelected.indexOf(productId);
       if (index !== -1) {
@@ -99,12 +110,33 @@
         return [...currentSelected, productId];
       }
     });
+    if (!forEdit) {
+      //@ts-ignore
+      productsHtml = products.map((product) => {
+        if ($productsSelected.includes(product.id)) {
+          return { ...product, quantity: 1 };
+        }
+      });
+    } else {
+      //@ts-ignore
+      productsHtml = await Promise.all(
+        products.map(async (product) => {
+          if ($productsSelected.includes(product.id)) {
+            const {
+              data: { amount: fp },
+            } = await $page.data.supa
+              .from("food_products")
+              .select("amount")
+              .eq("food_id", data.id)
+              .eq("product_id", product.id)
+              .single();
+            return await { ...product, quantity: fp };
+          }
+        }),
+      );
 
-    productsHtml = products.map((product) => {
-      if ($productsSelected.includes(product.id)) {
-        return { ...product, quantity: 1 };
-      }
-    });
+      console.log(productsHtml);
+    }
   }
 </script>
 
@@ -119,10 +151,15 @@
           {action}
           use:enhance={({ formData }) => {
             for (const product of productsHtml) {
-              formData.append(
-                "products",
-                JSON.stringify({ id: product.id, quantity: product.quantity }),
-              );
+              if (product !== undefined) {
+                formData.append(
+                  "products",
+                  JSON.stringify({
+                    id: product.id,
+                    quantity: product.quantity,
+                  }),
+                );
+              }
             }
             return async ({ update }) => {
               await update();
@@ -147,7 +184,7 @@
                 name={field.name}
                 type={field.type}
                 value={field.value}
-                step="{0.01}">
+                step={0.01}>
                 <InputNumber.Leading slot="leading" data={dollar} fill="#fff" />
                 <InputNumber.Label slot="label">
                   {field.label}
@@ -204,7 +241,7 @@
                               productHtml.quantity = 1;
                             }
                           }}
-                          max={productHtml?.stock.toString() ?? 1000} />
+                          max={String(productHtml?.stock ?? 1000)} />
                         <Button
                           size="xs"
                           type="default"
@@ -258,7 +295,7 @@
                     id={`product-${product.id}`}
                     checked={$productsSelected.includes(product.id)}
                     class="text-red-500 rounded border-gray-300 focus:ring-red-500"
-                    on:change={() => toggleProduct(product.id)} />
+                    on:change={async () => await toggleProduct(product.id)} />
                   <label
                     for={`product-${product.id}`}
                     class="ml-2 block text-sm my-2 text-gray-900">

@@ -11,3 +11,14 @@ export interface Crumb {
   label?: string;
   href: string;
 }
+export interface FoodProduct{
+    created_at: string;
+    description: string | null;
+    id: number;
+    name: string;
+    price: number;
+    products: {
+        amount: number | null;
+        product: {id: number, name: string};
+    }[];
+};
