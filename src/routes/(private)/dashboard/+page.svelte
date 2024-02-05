@@ -1,16 +1,14 @@
 <script lang="ts">
-  import type { PageData } from "./$types";
-  import { Statistic, Button, Card } from "stwui";
-  import { formatNumber } from "stwui/utils";
+  import { ChevronRight, Heart, Inbox, Truck, User } from "@steeze-ui/heroicons";
   import { Icon } from "@steeze-ui/svelte-icon";
-  import { ChevronRight } from "@steeze-ui/heroicons";
-  import { Heart, Inbox, Truck, User } from "@steeze-ui/heroicons";
-  import { barGraph } from "$lib/assets";
+  import { Button, Card, Statistic } from "stwui";
+  import { formatNumber } from "stwui/utils";
+  import type { PageData } from "./$types";
 
   export let data: PageData;
 </script>
 
-<main class="w-full p-3">
+<main class="w-full p-3 h-full flex flex-col justify-center items-center">
   <h3 class="text-3xl px-2">Panel de acciones</h3>
   <div
     class="w-full flex md:flex-row flex-col justify-center items-center p-2 mt-4 gap-5"
