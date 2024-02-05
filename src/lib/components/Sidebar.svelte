@@ -1,16 +1,28 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { EllipsisVertical } from "@steeze-ui/heroicons";
   import { Icon } from "@steeze-ui/svelte-icon";
-  import { Badge, Button, Drawer, Dropdown, List, Portal } from "stwui";
-  import {onMount} from "svelte";
+  import { Button, Drawer, Dropdown, List, Portal } from "stwui";
+  import { onMount } from "svelte";
 
   export let open: boolean = true;
   const handleClose: () => void = () => {
     open = false;
   };
 
-  const menuItems = [
+  const logout = async() => {
+    const { error } = await $page.data.supa.auth.signOut({ scope: "global" });
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    open = false;
+    $page.data.session = null;
+  };
+
+  let menuItems = [
     {
       title: "Nuestro menú",
       href: ''
@@ -34,6 +46,12 @@
   function toggleDropdown2() {
     visible = !visible;
   }
+
+  $: if(!($page.data?.session?.user)) {
+    menuItems = menuItems.filter(item => item.title !== "Inicio administrador");
+  }
+
+  $: console.log($page.data?.session);
 
   onMount(() => {
     if($page.data?.session?.user) {
@@ -65,7 +83,7 @@
         </List>
       </Drawer.Content>
       <Drawer.Footer>
-        {#if $page.data.session}
+        {#if $page.data?.session}
           <List>
             <List.Item>
               <List.Item.Leading slot="leading">
@@ -83,20 +101,10 @@
                     <Button slot="trigger" type="ghost" shape="circle" on:click={toggleDropdown2}>
                         <Icon src="{EllipsisVertical}" class="h-5 w-5"/>
                     </Button>
-                    <Dropdown.Items slot="items" alignment="center">
-                        <Dropdown.Items.Item on:click={closeDropdown2} label="Item 1">
-                            <Dropdown.Items.Item.Icon slot="icon" />
-                        </Dropdown.Items.Item>
-                        <Dropdown.Items.Item on:click={closeDropdown2} label="Item 2">
-                            <Dropdown.Items.Item.Icon slot="extra" />
-                        </Dropdown.Items.Item>
-                        <Dropdown.Items.Item on:click={closeDropdown2} label="Notifications">
-                            <Badge type="info" slot="extra">+99</Badge>
-                        </Dropdown.Items.Item>
-                        <Dropdown.Items.Divider />
-                        <Button type="danger" class="w-full justify-between">
+                    <Dropdown.Items slot="items" alignment="center" class="max-w-[130px]">
+                        <Button type="danger" class="w-full justify-between" on:click={logout}>
                             <Button.Leading slot="leading" />
-                            Home
+                            Logout
                             <Button.Trailing slot="trailing" />
                         </Button>
                     </Dropdown.Items>
