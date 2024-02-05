@@ -1,10 +1,15 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import BreadCrumbs from "$lib/components/BreadCrumbs.svelte";
+  import { onMount } from "svelte";
   import type { LayoutData } from "./$types";
+  import { goto } from "$app/navigation";
 
   export let data: LayoutData;
   
+  onMount(() => {
+    if (!data?.session?.user) goto("/");
+  });
 </script>
 
 <section class="bg-rose-200 h-full w-full">
