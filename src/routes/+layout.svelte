@@ -24,7 +24,7 @@
 </svelte:head>
 
 <Layout>
-    <Button type="primary" on:click="{openDrawer}" shape="circle" class="absolute top-4 left-6 w-fit h-fit">
+    <Button type="primary" on:click="{openDrawer}" shape="circle" class="absolute top-4 left-6 w-fit h-fit z-10">
         <Icon src="{Bars3}" class="!h-8 !w-8"/>
     </Button>
   <Layout.Content>
