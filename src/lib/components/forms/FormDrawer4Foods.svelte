@@ -198,7 +198,7 @@
                   : ''}}"
                 id={field.name}
                 name={field.name}
-                type={field.type}
+                type={field?.type ?? undefined}
                 placeholder={field.label}
                 value={field.value}>
                 <Input.Label slot="label">{field.label}</Input.Label>
@@ -235,7 +235,7 @@
                           bind:value={productHtml.quantity}
                           min="1"
                           on:input={() => {
-                            if (productHtml.quantity >= productHtml?.stock) {
+                            if (productHtml.quantity >= (productHtml?.stock ?? 0)) {
                               productHtml.quantity = productHtml?.stock ?? 0;
                             } else if (productHtml.quantity <= 1) {
                               productHtml.quantity = 1;
@@ -246,9 +246,9 @@
                           size="xs"
                           type="default"
                           class="text-white font-bold"
-                          disabled={productHtml.quantity >= productHtml?.stock}
+                          disabled={productHtml.quantity >= (productHtml?.stock ?? 0)}
                           on:click={() => {
-                            if (productHtml.quantity >= productHtml?.stock) {
+                            if (productHtml.quantity >= (productHtml?.stock ?? 0)) {
                               productHtml.quantity = productHtml?.stock ?? 0;
                             } else {
                               productHtml.quantity++;
