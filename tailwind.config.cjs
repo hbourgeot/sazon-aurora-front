@@ -31,7 +31,7 @@ const config = {
           success: "#6B705C", // Verde oliva para los éxitos
           error: "#DC2626", // Mantén el rojo para los errores
           warn: "#F59E0B", // Naranja para las advertencias
-          "primary-hover": "#831821", // Rojo vino más oscuro para hover en botones primarios
+          "primary-hover": "#c12a2f", // Rojo vino más oscuro para hover en botones primarios
           "primary-content": "#FFFFFF", // Blanco para el contenido sobre el color primario
           "default-hover": "#F5DEB3", // Beige más oscuro para el hover por defecto
           "default-content": "#EEEEEE", // Marrón oscuro para el contenido por defecto
