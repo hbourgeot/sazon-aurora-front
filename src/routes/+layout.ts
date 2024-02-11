@@ -32,9 +32,27 @@ export const load: LayoutLoad = async ({ data, depends }) => {
     }
   );
 
-  const {
+  let {
     data: { session },
   } = await supabase.auth.getSession();
+
+  if (session?.user?.email) {
+    const { data: user, error } = await supabase.from('users').select('*').eq('email', session.user.email).single()
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    console.log(user);
+    session = {
+      ...session,
+      user: {
+        ...session?.user,
+        // @ts-ignore
+        database: user,
+      },
+    }
+  }
 
   return { supa: supabase, session };
 };

@@ -20,6 +20,7 @@
 
     open = false;
     $page.data.session = null;
+    window.location.reload();
   };
 
   let menuItems = [
@@ -48,6 +49,11 @@
   }
 
   $: if(!($page.data?.session?.user)) {
+    menuItems = menuItems.filter(item => item.title !== "Inicio administrador");
+  }
+
+  $: if ($page.data?.session?.user?.database?.role !== 1){
+    console.log('no es admin');
     menuItems = menuItems.filter(item => item.title !== "Inicio administrador");
   }
 
@@ -90,8 +96,9 @@
                 <List.Item.Leading.Avatar slot="avatar" src="{$page.data.session?.user?.user_metadata.picture}" />
               </List.Item.Leading>
               <List.Item.Content slot="content" class="relative">
-                <List.Item.Content.Title slot="title"
-                  >{$page.data.session?.user?.user_metadata.name}</List.Item.Content.Title
+                <List.Item.Content.Title slot="title">
+                  {$page.data.session?.user?.user_metadata.name ?? $page.data.session?.user?.database?.name}
+                  </List.Item.Content.Title
                 >
                 <List.Item.Content.Description slot="description">
                   {$page.data.session?.user.email}
