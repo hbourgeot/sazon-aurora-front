@@ -6,8 +6,26 @@ import type { Actions, PageServerLoad } from "./$types";
 export const load = (async ({ locals: { svelxios } }) => {
   const { data: users }: { data: User[] } = await svelxios.get("/user/all");
 
+  const usersWithoutPassword: {
+    document: string;
+    email: string;
+    id: number;
+    name: string;
+  }[] = [];
+  
+  users.forEach((user) => {
+    if (user.role !== 1) {
+      usersWithoutPassword.push({
+        id: user.id, 
+        name: user.name, 
+        email: user.email, 
+        document: user.document
+      });
+    }
+  });
+  console.log(usersWithoutPassword);
   //@ts-ignore
   return {
-    users
+    users: usersWithoutPassword,
   };
 }) satisfies PageServerLoad;

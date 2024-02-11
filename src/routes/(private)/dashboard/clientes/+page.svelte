@@ -19,7 +19,6 @@
   const columns: TableColumn[] = [
    {column: "id", label: "ID", placement: "center"},
     {column: "name", label: "Nombre", placement: "center"},
-    {column: "role", label: "Rol", placement: "center"},
     {column: "email", label: "Correo", placement: "center"},
     {column: "document", label: "Documento de Identidad", placement: "center"},
   ];
