@@ -55,7 +55,7 @@ $: pagination = pageRange(currentPage, totalPages);
 			<p class="text-sm text-secondary-content">
 				Mostrando
 				<span class="font-medium">{start}</span>
-				
+				-
 				<span class="font-medium">{end}</span>
 				de
 				<span class="font-medium">{total}</span>
