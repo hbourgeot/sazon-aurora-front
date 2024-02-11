@@ -7,6 +7,8 @@
 
   export let data: LayoutData;
   
+  // @ts-ignore
+  $: if (!data?.session?.user || data.session?.user.database.role === 3) goto("/");
   onMount(() => {
     if (!data?.session?.user) goto("/");
   });
