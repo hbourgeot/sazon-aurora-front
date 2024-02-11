@@ -20,6 +20,7 @@
 
     open = false;
     $page.data.session = null;
+    window.location.reload();
   };
 
   let menuItems = [
@@ -54,7 +55,7 @@
   $: console.log($page.data?.session);
 
   onMount(() => {
-    if($page.data?.session?.user) {
+    if($page.data?.session?.user && $page.data?.session?.user?.database?.role === 1) {
       menuItems.push({
         title: "Inicio administrador",
         href: '/dashboard'
@@ -90,8 +91,9 @@
                 <List.Item.Leading.Avatar slot="avatar" src="{$page.data.session?.user?.user_metadata.picture}" />
               </List.Item.Leading>
               <List.Item.Content slot="content" class="relative">
-                <List.Item.Content.Title slot="title"
-                  >{$page.data.session?.user?.user_metadata.name}</List.Item.Content.Title
+                <List.Item.Content.Title slot="title">
+                  {$page.data.session?.user?.user_metadata.name ?? $page.data.session?.user?.database?.name}
+                  </List.Item.Content.Title
                 >
                 <List.Item.Content.Description slot="description">
                   {$page.data.session?.user.email}
