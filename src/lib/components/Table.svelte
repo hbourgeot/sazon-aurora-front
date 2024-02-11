@@ -68,6 +68,14 @@
 
     data.total = data.results.length;
     data.start = (parseInt(currentPage) - 1) * 25 + 1;
+    if (data.total < 25) {
+      data.end = data.total;
+    }
+
+    if(data.results.length === 0){
+      data.start = 0;
+      data.end = 0;
+    }
     data.end = Math.min(parseInt(currentPage) * 25, data.total);
   }
 
@@ -119,24 +127,27 @@
   }
 
 </script>
-
-<svelte:component
-  this={FormComponent}
-  title={dynamicFormTitle}
-  action={formAction}
-  open={drawer.open}
-  data={formData}
-/>
+{#if FormComponent}
+  <svelte:component
+    this={FormComponent}
+    title={dynamicFormTitle}
+    action={formAction}
+    open={drawer.open}
+    data={formData}
+  />
+{/if}
 <Card bordered={false} elevation="lg" class="p-2 w-full height">
   <Card.Header
     slot="header"
     class="font-semibold text-lg flex justify-between items-center py-3"
   >
     {title}
-    <Button slot="extra" type="primary" on:click={() => (add())} class="flex justify-between items-center gap-x-1">
-      <Icon src={PlusCircle} class="h-5 w-5 font-bold" theme="solid"/>
-      Agregar
-    </Button>
+    {#if FormComponent}
+      <Button slot="extra" type="primary" on:click={() => (add())} class="flex justify-between items-center gap-x-1">
+        <Icon src={PlusCircle} class="h-5 w-5 font-bold" theme="solid"/>
+        Agregar
+      </Button>
+    {/if}
   </Card.Header>
   <Card.Content
     slot="content"
