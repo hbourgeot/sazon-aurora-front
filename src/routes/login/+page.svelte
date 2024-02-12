@@ -12,7 +12,8 @@
   let email = "";
   let password = "";
 
-  const signIn = async () => {
+  const signInGoogle = async () => {
+    //@ts-ignore
     const { error } = await data.supa.auth.signInWithOAuth({
       provider: "google",
       options: {
@@ -26,6 +27,19 @@
     if (error) {
       alert(error.message);
     }
+  };
+
+  const signInPassword = async () => {
+    //@ts-ignore
+    const { error } = await data.supa.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) {
+      alert(error.message);
+    }
+
+    goto("/", {replaceState: true, invalidateAll: true});
   };
 
   onMount(() => {
@@ -50,9 +64,10 @@
             bind:value={password}
             placeholder="Contraseña"
             type="password"
+            showPasswordToggle
             class="w-full" />
           <Button
-            class="w-full bg-secondary-content hover:bg-primary-hover text-primary-content">
+            class="w-full bg-secondary-content hover:bg-primary-hover text-primary-content" on:click={signInPassword}>
             Entrar
           </Button>
           <Divider>
@@ -60,7 +75,7 @@
           </Divider>
           <div class="flex justify-between gap-x-3 my-2">
             <Button
-              on:click={signIn}
+              on:click={signInGoogle}
               class="w-full bg-danger hover:bg-danger-hover text-danger-content">
               <Icon src={Google} class="h-5 w-5 font-bold mr-2" theme="solid" />
               Google
