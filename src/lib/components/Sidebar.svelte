@@ -26,7 +26,7 @@
   let menuItems = [
     {
       title: "Nuestro menú",
-      href: ''
+      href: '/menu'
     },
     {
       title: "Ver tu carrito",
