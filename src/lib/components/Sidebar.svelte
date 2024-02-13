@@ -66,12 +66,12 @@
 
 <Portal>
   {#if open}
-    <Drawer {handleClose} placement="left">
+    <Drawer {handleClose} placement="left" on:click={handleClose}>
       <Drawer.Header>
         <h1 class="text-3xl font-semibold">El sazón de <span class="gradient font-extrabold">Aurora</span></h1>
       </Drawer.Header>
       <Drawer.Content>
-        <List>
+        <List on:click={handleClose}>
           {#each menuItems as item}
             <List.Item>
               <List.Item.Content slot="content">
@@ -115,10 +115,10 @@
           </List>
         {:else}
           <div class="tw-flex gap-x-4">
-            <Button shape="rounded" type="default" href="/login" >
+            <Button shape="rounded" type="default" href="/login"  on:click={handleClose}>
               Iniciar sesión
             </Button>
-            <Button shape="rounded" type="primary" href="/registro">
+            <Button shape="rounded" type="primary" href="/registro" on:click={handleClose}>
               Registrarse
             </Button>
           </div>
