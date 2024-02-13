@@ -65,6 +65,12 @@ export const actions: Actions = {
       created_at: dayjs().toISOString(),
     };
 
+    const formData = new FormData();
+    formData.append("name", payload.name);
+    formData.append("description", payload.description);
+    formData.append("price", payload.price);
+    formData.append("created_at", payload.created_at);
+
     const {
       data: [food],
     }: { data: [Food, number] } = await svelxios.post("/food/new", payload);

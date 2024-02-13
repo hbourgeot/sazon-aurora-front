@@ -62,6 +62,7 @@
         description: "",
         price: "",
         created_at: "",
+        files: null
     };
 
     setBreadcrumbs(routes);
