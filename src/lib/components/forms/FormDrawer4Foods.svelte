@@ -1,7 +1,7 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
   import { page } from "$app/stores";
-  import type { Product } from "$lib/types";
+  import type { Food, ImageFile, Product } from "$lib/types";
   import { CloudArrowUp } from "@steeze-ui/heroicons";
   import { UploadCloud2 } from "@steeze-ui/remix-icons";
   import { Icon } from "@steeze-ui/svelte-icon";
@@ -9,6 +9,7 @@
     Button,
     Drawer,
     FilePicker,
+    FilePreview,
     Input,
     InputNumber,
     Portal,
@@ -16,6 +17,8 @@
   } from "stwui";
   import { formatNumber } from "stwui/utils";
   import { writable } from "svelte/store";
+  import FilePickerWithPreview from "../FilePickerWithPreview.svelte";
+  import type { SubmitFunction } from "@sveltejs/kit";
 
   export let open: boolean = false;
   export let title: string;
@@ -27,19 +30,14 @@
 <path d="M18 8.5V8.35417C18 6.50171 16.4983 5 14.6458 5H9.5C7.567 5 6 6.567 6 8.5C6 10.433 7.567 12 9.5 12H14.5C16.433 12 18 13.567 18 15.5C18 17.433 16.433 19 14.5 19H9.42708C7.53436 19 6 17.4656 6 15.5729V15.5M12 3V21" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>`;
 
-  const cloud = `<?xml version="1.0" encoding="utf-8"?>
+  let files: ImageFile[];
 
-<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg width="800px" height="800px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="icomoon-ignore">
-</g>
-<path d="M12.025 16.156l-0.756-0.756 4.775-4.775 4.775 4.775-0.756 0.756-3.488-3.488v13.956h-1.069v-13.956l-3.481 3.488zM26.194 9.569c0-0.088 0.012-0.169 0.012-0.25 0-4.569-3.7-8.269-8.269-8.269-3.287 0-6.119 1.925-7.45 4.706-0.575-0.287-1.225-0.456-1.912-0.456-2.112 0-3.862 1.537-4.2 3.55-2.513 0.863-4.325 3.244-4.325 6.050 0 3.531 2.862 6.394 6.394 6.394h6.938v-1.069h-6.938c-2.938 0-5.325-2.394-5.325-5.331 0-2.275 1.45-4.3 3.606-5.044l0.6-0.206 0.106-0.625c0.263-1.544 1.587-2.662 3.15-2.662 0.5 0 0.981 0.119 1.431 0.344l0.975 0.487 0.469-0.981c1.188-2.481 3.731-4.088 6.481-4.088 3.969 0 7.2 3.231 7.2 7.2 0 0.019 0 0.044-0.006 0.069-0.006 0.050-0.006 0.106-0.006 0.162l-0.025 1.088 1.087 0.006c2.637 0.006 4.787 2.162 4.787 4.8 0 2.631-2.144 4.781-4.775 4.794h-7.488v1.069h7.494c3.225-0.019 5.837-2.637 5.837-5.863-0.006-3.244-2.619-5.869-5.85-5.875z" fill="#000000">
-
-</path>
-</svg>`;
+  $: console.log(files);
+  let form: HTMLFormElement;
 
   let productsSelected = writable<number[]>([]);
   let products: (Product & { quantity: number })[] = $page.data.products;
+  let foods = $page.data.foods;
   let productsHtml: (Product & { quantity: number })[] = [];
   let selectProducts: boolean = false;
   let formFields = [
@@ -75,7 +73,13 @@
     },
   ];
 
+  $: if(data?.id){
+    console.log(data);
+    data.images = $page.data.foodsWithImages.find((f: Food) => f.id === data.id)?.images;
+    console.log(data);
+  }
   $: products = $page.data.products;
+  $: foods = $page.data.foods;
   $: formFields = [
     {
       name: "id",
@@ -105,9 +109,37 @@
       name: "files",
       label: "Imágenes",
       type: "file",
-      value: (data && data["files"]) ?? null,
+      value: (data && data["images"]) ? createBlob() : null,
     },
   ];
+
+  async function createBlob() {
+    const blobsPromises = data.images.map(async (imageUrl: string) => {
+    try {
+      const response = await fetch(imageUrl);
+      if (!response.ok) throw new Error('Respuesta de red no fue ok');
+
+      const imageBlob = await response.blob(); // Obtiene el blob de la imagen
+      const fileName = `${data.name}.webp`; // O considera extraer el nombre/extension original de la URL
+      const imageFile = new File([imageBlob], fileName, { type: "image/webp" }); // Asumiendo que quieres forzar .webp, ajusta según necesidad
+
+      return imageFile;
+    } catch (error) {
+      console.error('Error descargando imagen:', error);
+      return null; // Maneja el error según tu caso de uso
+    }
+  });
+
+  const blobs = await Promise.all(blobsPromises);
+  files = blobs.filter(blob => blob !== null).map((file, indx) => ({
+    file: file,
+    src: URL.createObjectURL(file),
+    progress: undefined,
+  }));
+
+  console.log(files);
+  return files; 
+}
 
   $: if (data?.products) {
     const dataProducts = data.products.split(",");
@@ -135,7 +167,32 @@
 
   const handleButtonClick: (e: Event) => void = (e) => {
     e.stopPropagation();
-    console.log("Button clicked");
+    form.requestSubmit();
+  };
+
+  const handleSubmit: SubmitFunction = ({ formData }) => {
+    for (const product of productsHtml) {
+      if (product !== undefined) {
+        formData.append(
+          "products",
+          JSON.stringify({
+            id: product.id,
+            quantity: product.quantity,
+          }),
+        );
+      }
+    }
+
+    console.log(files, "files");
+    for (const file of files) {
+      console.log(file);
+      formData.append("files", file.file);
+    }
+    return async ({ update }) => {
+      await update();
+      open = false;
+      files = [];
+    };
   };
 
   async function toggleProduct(productId: number, forEdit: boolean = false) {
@@ -188,23 +245,8 @@
       <Drawer.Content slot="content" class="overflow-y-auto overflow-x-hidden">
         <form
           {action}
-          use:enhance={({ formData }) => {
-            for (const product of productsHtml) {
-              if (product !== undefined) {
-                formData.append(
-                  "products",
-                  JSON.stringify({
-                    id: product.id,
-                    quantity: product.quantity,
-                  }),
-                );
-              }
-            }
-            return async ({ update }) => {
-              await update();
-              open = false;
-            };
-          }}
+          bind:this={form}
+          use:enhance={handleSubmit}
           method="POST">
           {#each formFields as field}
             {#if field.type === "textarea"}
@@ -244,15 +286,7 @@
               </Input>
             {:else if field.type === "file"}
               <div class="px-3 py-2 w-full">
-                <FilePicker onDrop={(files) => console.log(files)}>
-                  <FilePicker.Icon slot="icon" data={cloud} />
-                  <FilePicker.Title slot="title">
-                    Sube las imagenes del platillo.
-                  </FilePicker.Title>
-                  <FilePicker.Description slot="description">
-                    Puedes arrastrarlas aquí o haciendo click.
-                  </FilePicker.Description>
-                </FilePicker>
+                <FilePickerWithPreview bind:myFiles={files} />
               </div>
             {/if}
           {/each}
@@ -326,7 +360,6 @@
               Seleccionar productos
             </Button>
           </div>
-          
         </form>
       </Drawer.Content>
       <Drawer.Footer slot="footer">
