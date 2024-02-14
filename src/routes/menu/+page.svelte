@@ -13,6 +13,7 @@ import type { PageData } from "./$types";
         title={food.name}
         description={food.description}
         price={food.price}
+        image={food.image}
         />
         {/each}
     </section>
