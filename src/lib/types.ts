@@ -22,5 +22,12 @@ export interface FoodProduct{
     products: {
         amount: number | null;
         product: {id: number, name: string};
-    }[];
+  }[];
+  images?: string[];
 };
+
+export interface ImageFile {
+  file: File;
+  src: string;
+  progress: number | undefined;
+}

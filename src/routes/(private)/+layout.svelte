@@ -4,13 +4,18 @@
   import { onMount } from "svelte";
   import type { LayoutData } from "./$types";
   import { goto } from "$app/navigation";
+  import { browser } from "$app/environment";
 
   export let data: LayoutData;
-  
+
   // @ts-ignore
-  $: if (!data?.session?.user || data.session?.user.database.role === 3) goto("/");
+  $: if (
+    (!data?.session?.user || data.session?.user.database.role === 3) &&
+    browser
+  )
+    goto("/");
   onMount(() => {
-    if (!data?.session?.user) goto("/");
+    if (!data?.session?.user && browser) goto("/");
   });
 </script>
 
@@ -18,10 +23,10 @@
   {#if $page.url.pathname === "/dashboard"}
     <h1 class="text-4xl p-2 top-3 right-2 absolute">
       {#if data.session?.user}
-      Hola,
-      <span class="gradient">
-        {data.session?.user?.user_metadata.name}
-      </span>
+        Hola,
+        <span class="gradient">
+          {data.session?.user?.user_metadata.name}
+        </span>
       {/if}
     </h1>
   {:else}
