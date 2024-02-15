@@ -1,18 +1,18 @@
 <script lang="ts">
   import { empty } from "$lib/assets";
-  import { Plus, PlusCircle } from "@steeze-ui/heroicons";
-  import { Icon } from "@steeze-ui/svelte-icon";
-  import { Button, Card } from "stwui";
-  import { formatNumber } from "stwui/utils";
-  import { tooltip } from 'stwui/actions';
   import { addToCart } from "$lib/store/cart.store";
-  import type { Food } from "$lib/types";
+  import type { FoodProduct } from "$lib/types";
+  import { Plus } from "@steeze-ui/heroicons";
+  import { Icon } from "@steeze-ui/svelte-icon";
+  import { Card } from "stwui";
+  import { tooltip } from 'stwui/actions';
+  import { formatNumber } from "stwui/utils";
 
   export let title = "Product Title";
   export let description = "Product Description";
   export let price = 0.0;
   export let image = empty;
-  export let food: Food;
+  export let food: any;
 </script>
 
 <Card hoverable bordered={false} elevation="lg" class="w-full">
