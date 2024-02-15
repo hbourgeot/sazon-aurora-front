@@ -103,10 +103,10 @@
                     <Button slot="trigger" type="ghost" shape="circle" on:click={toggleDropdown2}>
                         <Icon src="{EllipsisVertical}" class="h-5 w-5"/>
                     </Button>
-                    <Dropdown.Items slot="items" alignment="center" class="max-w-[130px]">
+                    <Dropdown.Items slot="items" alignment="center" class="max-w-[180px]">
                         <Button type="danger" class="w-full justify-between" on:click={logout}>
                             <Button.Leading slot="leading" />
-                            Logout
+                            Cerrar sesión
                             <Button.Trailing slot="trailing" />
                         </Button>
                     </Dropdown.Items>
