@@ -38,6 +38,7 @@
 <style>
   :global(body){
     font-family: 'Raleway Variable', sans-serif;
+    background-color: #FFF7F7;
   }
   
   :global(h1, h2, h3, h4, h5, h6){
