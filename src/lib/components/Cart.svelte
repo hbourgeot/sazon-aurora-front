@@ -7,6 +7,7 @@
   import Product from "./Product.svelte";
   import type { FoodProduct } from "$lib/types";
   import { formatNumber } from "stwui/utils";
+  import { createEventDispatcher } from "svelte";
 
   export let open = false;
   let pagar = false;
@@ -14,6 +15,8 @@
   function handleClose() {
     open = false;
   }
+
+  const dispatch = createEventDispatcher();
 
   function minusOrRemove(indx: number) {
     return () => {
@@ -29,6 +32,10 @@
   function add(indx: number) {
     $cart.products[indx].amount++; // Aumenta la cantidad
     $cart.products = $cart.products.slice(); // Clave para reactividad
+  }
+
+  function generarInvoice() {
+    dispatch("pagar")
   }
 </script>
 
@@ -107,7 +114,7 @@
               })}</span></p>
             </Drawer.Content>
             <Drawer.Footer>
-              <Button type="primary" block>Pagar</Button>
+              <Button type="primary" block on:click={() => generarInvoice()}>Pagar</Button>
             </Drawer.Footer>
           </Drawer>
         {/if}

@@ -8,9 +8,10 @@
   import { cart } from "$lib/store/cart.store";
   import Cart from "$lib/components/Cart.svelte";
   import { onMount } from "svelte";
+  import type { CartDetails, FoodProduct } from "$lib/types";
   export let data: PageData;
 
-  const drawer = { open: true };
+  const drawer = { open: false };
 
   const handleVisibilityChange = () => {
     if (document.visibilityState === "visible") {
@@ -30,7 +31,7 @@
       ?.from("cart")
       .select("id, created_at, user_id")
       .eq("user_id", user)
-      .single();
+      .maybeSingle();
       
       if (fetchError) {
         console.error(fetchError);
@@ -92,15 +93,102 @@
     }
   };
 
+  const getCart = async () => {
+    //@ts-ignore
+    const user = data?.session?.user?.database?.id;
+    console.log(user);
+    //@ts-ignore
+    const { error, data: cart} = await data.supa?.from("cart").select("*").eq("user_id", user).maybeSingle();
+    if (error) {
+      console.error(error);
+      return;
+    }
+    console.log(cart);
+
+    if(!cart) {
+      return;
+    }
+    //@ts-ignore
+    const { error: detailsError, data: cartDetails } = await data.supa?.from("cart_details").select("*, foods(id, name, description)").eq("cart_id", cart.id);
+    if (detailsError) {
+      console.error(detailsError);
+      return;
+    }
+
+    console.log(cartDetails);
+
+    let products = cartDetails.map((detail: CartDetails) => {
+      return {
+        id: detail.food_id,
+        amount: detail.quantity,
+        price: detail.total_price,
+        //@ts-ignore
+        name: detail.foods.name,
+        //@ts-ignore
+        description: detail.foods.description,
+        image: data.foods.find((food) => food.id === detail.food_id)?.image,
+      };
+    });
+
+    $cart.products = products;
+    $cart.totalAmount = products.reduce((acc: number, product: FoodProduct) => acc + product.price, 0);
+  };
+
   onMount(() => {
+    getCart();
     document.addEventListener("visibilitychange", handleVisibilityChange);
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   });
+
+  const generarInvoice = async () => {
+    await handleCart();
+    //@ts-ignore
+    const user = data?.session?.user?.database?.id;
+
+    //@ts-ignore
+    const {error, data: [newInvoice]} = await data.supa?.from("invoices").insert({
+      created_at: new Date().toISOString(),
+      user_id: user,
+      total: $cart.totalAmount,
+      status: "PAGADO"
+    }).select();
+
+    console.log(newInvoice);
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    for (const product of $cart.products) {
+      const invoicePayload = {
+        invoice_id: newInvoice.id,
+        food_id: product.id,
+        quantity: product.amount,
+        price: product.price * product.amount,
+      };
+
+      //@ts-ignore
+      const { error: insertError } = await data.supa?.from("invoice_details").insert(invoicePayload);
+      if (insertError) {
+        console.error(insertError);
+        return;
+      }
+    }
+
+    console.log("Invoice inserted!");
+
+    $cart.products = [];
+    drawer.open = false;
+
+    //@ts-ignore
+    const { error: deleteError } = await data.supa?.from("cart").delete().eq("user_id", user);
+  };
 </script>
 
-<Cart open={drawer.open} />
+<Cart open={drawer.open} on:pagar={generarInvoice} />
 <main class="mx-auto h-full !p-4">
   <button
     class="fixed top-6 right-6 rounded-full h-11 w-11 p-2 flex justify-center items-center {$cart

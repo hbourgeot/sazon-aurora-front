@@ -8,6 +8,8 @@ export type Food = SupaDB["public"]["Tables"]["foods"]["Row"];
 
 export type User = SupaDB["public"]["Tables"]["users"]["Row"];
 
+export type CartDetails = SupaDB["public"]["Tables"]["cart_details"]["Row"];
+
 export interface Crumb {
   icon?: string;
   label?: string;
