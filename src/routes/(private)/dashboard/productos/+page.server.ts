@@ -6,9 +6,9 @@ export const load = (async ({ locals: { svelxios } }) => {
     "/product/all"
   );
 
-  const {
-    data: { providers },
-  }: { data: { providers: Provider[] } } = await svelxios.get("/provider/all");
+  const { data: providers }: { data: Provider[] } = await svelxios.get(
+    "/provider/all"
+  );
 
   const providerOptions = providers.map(({ name }) => name);
 

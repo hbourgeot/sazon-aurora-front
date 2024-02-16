@@ -1,6 +1,6 @@
 <script lang="ts">
   import { empty, emptyCart } from "$lib/assets";
-  import { cart } from "$lib/store/cart.store";
+  import { cart, decreaseAmount, increaseAmount } from "$lib/store/cart.store";
   import { Minus, Plus } from "@steeze-ui/heroicons";
   import { Icon } from "@steeze-ui/svelte-icon";
   import { Button, Drawer, InputNumber, Portal } from "stwui";
@@ -14,6 +14,7 @@
 
   function handleClose() {
     open = false;
+    pagar = false;
   }
 
   const dispatch = createEventDispatcher();
@@ -21,8 +22,9 @@
   function minusOrRemove(indx: number) {
     return () => {
       if ($cart.products[indx].amount > 1) {
-        $cart.products[indx].amount--; // Disminuye la cantidad
+        decreaseAmount(indx)
       } else {
+        decreaseAmount(indx)
         $cart.products.splice(indx, 1); // Elimina el producto
       }
       $cart.products = $cart.products.slice(); // Clave para reactividad
@@ -30,12 +32,14 @@
   }
 
   function add(indx: number) {
-    $cart.products[indx].amount++; // Aumenta la cantidad
+    increaseAmount(indx)
     $cart.products = $cart.products.slice(); // Clave para reactividad
   }
 
   function generarInvoice() {
-    dispatch("pagar")
+    dispatch("pagar");
+    pagar = false;
+    open = false;
   }
 </script>
 

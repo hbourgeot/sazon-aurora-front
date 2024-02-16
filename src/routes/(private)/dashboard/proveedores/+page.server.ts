@@ -1,11 +1,11 @@
-import type { SupaDB } from "$lib/database.types";
+import type { Provider } from "$lib/types";
 import type { Actions, PageServerLoad } from "./$types";
 
 export const load = (async ({ locals: { svelxios } }) => {
   const {
-    data: { providers },
+    data: providers,
   }: {
-    data: { providers: SupaDB["public"]["Tables"]["providers"]["Row"][] };
+    data: Provider[];
   } = await svelxios.get("/provider/all");
   return { providers: providers };
 }) satisfies PageServerLoad;

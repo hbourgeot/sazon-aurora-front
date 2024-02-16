@@ -170,11 +170,15 @@
         price: product.price * product.amount,
       };
 
+      try{
       //@ts-ignore
       const { error: insertError } = await data.supa?.from("invoice_details").insert(invoicePayload);
       if (insertError) {
         console.error(insertError);
         return;
+      }
+      } catch (error) {
+        console.error(error);
       }
     }
 
@@ -184,7 +188,7 @@
     drawer.open = false;
 
     //@ts-ignore
-    const { error: deleteError } = await data.supa?.from("cart").delete().eq("user_id", user);
+    await data.supa?.from("cart").delete().eq("user_id", user);
   };
 </script>
 

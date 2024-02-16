@@ -8,7 +8,6 @@ export const cart = writable({
 
 export const addToCart = (product: FoodProduct) => {
   cart.update((state) => {
-    console.log(product);
     const existingProduct = state.products.find(p => p.id === product.id);
     if (existingProduct) {
       existingProduct.amount += 1;
@@ -16,6 +15,29 @@ export const addToCart = (product: FoodProduct) => {
       state.products = [...state.products, { ...product, amount: 1 }];
     }
     state.totalAmount += product.price;
+    console.log(state);
+    return state;
+  });
+}
+
+export const increaseAmount = (id: number) => {
+  cart.update((state) => {
+    const existingProduct = state.products[id];
+    if (existingProduct) {
+      existingProduct.amount += 1;
+      state.totalAmount += existingProduct.price;
+    }
+    return state;
+  });
+}
+
+export const decreaseAmount = (id: number) => {
+  cart.update((state) => {
+    const existingProduct = state.products[id];
+    if (existingProduct) {
+      existingProduct.amount -= 1;
+      state.totalAmount -= existingProduct.price;
+    }
     return state;
   });
 }

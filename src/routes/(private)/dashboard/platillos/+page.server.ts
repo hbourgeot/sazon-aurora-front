@@ -155,6 +155,8 @@ export const actions: Actions = {
             quantity: productParsed.quantity,
           };
         });
+      
+      console.log(products)
 
       for (const product of products) {
         const { data: idk } = await svelxios.post(

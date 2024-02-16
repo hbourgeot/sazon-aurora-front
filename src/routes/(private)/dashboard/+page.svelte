@@ -21,7 +21,7 @@
           theme="solid"
           class="h-10 w-10 text-primary absolute top-4 right-4" />
         <Statistic.Value class="text-primary" slot="value">
-          {formatNumber(25660000, {
+          {formatNumber(data.ventas, {
             style: "decimal",
             notation: "compact",
             maximumFractionDigits: 1,
@@ -38,13 +38,13 @@
         </Button>
       </Statistic>
       <Statistic class="w-full relative" bordered={false}>
-        <Statistic.Title slot="title">Clientes satisfechos</Statistic.Title>
+        <Statistic.Title slot="title">Clientes registrados</Statistic.Title>
         <Icon
           src={User}
           theme="solid"
           class="h-10 w-10 text-primary absolute top-4 right-4" />
         <Statistic.Value class="text-primary" slot="value">
-          {formatNumber(23548, {
+          {formatNumber(data.clientesTotales, {
             style: "decimal",
             notation: "compact",
             maximumFractionDigits: 1,
@@ -66,7 +66,7 @@
           theme="solid"
           class="h-10 w-10 text-primary absolute top-4 right-4" />
         <Statistic.Value class="text-primary" slot="value">
-          {formatNumber(248394, {
+          {formatNumber(data.productosTotales, {
             style: "decimal",
             notation: "compact",
             maximumFractionDigits: 1,
@@ -83,12 +83,19 @@
         </Button>
       </Statistic>
       <Statistic class="w-full relative" bordered={false}>
-        <Statistic.Title slot="title">Proveedores en camino</Statistic.Title>
+        <Statistic.Title slot="title">Proveedores registrados</Statistic.Title>
         <Icon
           src={Truck}
           theme="solid"
           class="h-10 w-10 text-primary absolute top-4 right-4" />
-        <Statistic.Value class="text-primary" slot="value">25</Statistic.Value>
+        <Statistic.Value class="text-primary" slot="value">
+          {formatNumber(data.proveedoresTotales, {
+            style: "decimal",
+            notation: "compact",
+            maximumFractionDigits: 1,
+            minimumFractionDigits: 1,
+          })}
+        </Statistic.Value>
         <Button
           type="link"
           shape="rounded"
