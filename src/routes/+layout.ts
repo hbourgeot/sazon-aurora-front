@@ -2,11 +2,9 @@ import {
   PUBLIC_SUPABASE_KEY,
   PUBLIC_SUPABASE_URL,
 } from "$env/static/public";
-import type{ SupaDB } from "$lib/database.types";
-import type { LayoutLoad } from "./$types";
+import type { SupaDB } from "$lib/database.types";
 import { createBrowserClient, isBrowser, parse } from "@supabase/ssr";
-import type {Session} from "@supabase/supabase-js";
-import {SupabaseClient} from "@supabase/supabase-js";
+import type { LayoutLoad } from "./$types";
 
 export const load: LayoutLoad = async ({ data, depends }) => {
   depends("supabase:auth");

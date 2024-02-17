@@ -54,7 +54,7 @@
 	allowedExtensions={['png', 'jpg', 'jpeg', 'gif', 'webp']}
 >
 	<FilePicker.Icon slot="icon" data={cloud} />
-	<FilePicker.Title slot="title">Sube múltiple imágenes</FilePicker.Title>
+	<FilePicker.Title slot="title">Sube varias imágenes</FilePicker.Title>
 	<FilePicker.Description slot="description">
 		Arrastrálas o haz click aquí
 	</FilePicker.Description>
