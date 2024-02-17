@@ -3,6 +3,8 @@
   import FormDrawer4Products from "$lib/components/forms/FormDrawer4Products.svelte";
   import type { TableColumn } from "stwui/types";
   import type { PageData } from "./$types";
+  import type { Crumb } from "$lib/types";
+  import { setBreadcrumbs } from "$lib/store/breadcrumbs.store";
 
   export let data: PageData;
 
@@ -50,6 +52,11 @@
     },
   ];
 
+const routes: Crumb[] = [
+    { label: "Dashboard", href: "/dashboard" },
+    { label: "Productos", href: "/dashboard/Productos" },
+  ];
+setBreadcrumbs(routes);
 </script>
 
 <main class="w-full h-full">

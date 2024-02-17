@@ -1,22 +1,25 @@
-import type { Product, Food, FoodProduct } from "$lib/types";
+import type { Food, FoodProduct, Product } from "$lib/types";
 import { fail } from "@sveltejs/kit";
-import type { Actions, PageServerLoad } from "./$types";
 import dayjs from "dayjs";
+import type { Actions, PageServerLoad } from "./$types";
 
 export const load = (async ({ locals: { svelxios } }) => {
   const { data: dishes }: { data: FoodProduct[] } = await svelxios.get(
     "/food/all"
   );
 
-  const foods = dishes.map((dish) => ({
+  console.log(dishes);
+
+  const foods = dishes.map((dish: any) => ({
     id: dish.id,
     name: dish.name,
     description: dish.description,
     price: dish.price,
     created_at: dayjs(dish.created_at).format("DD/MM/YYYY"),
     products:
-      dish.products.map((product) => product.product.name).join(", ").length > 1
-        ? dish.products.map((product) => product.product.name).join(", ")
+      dish.products.map((product: any) => product.product.name).join(", ")
+        .length > 1
+        ? dish.products.map((product: any) => product.product.name).join(", ")
         : "No hay productos",
   }));
 
@@ -31,11 +34,17 @@ export const load = (async ({ locals: { svelxios } }) => {
     return { ...food, products: productsWithAmount };
   });
 
+  const foodsWithImages = foods.map((food) => ({
+    ...food,
+    images: dishes.find((dish) => dish.id === food.id)?.images,
+  }));
+
   //@ts-ignore
   return {
     foods,
+    foodsWithImages,
     products: products.filter(
-      (product) => product?.stock > 0,
+      (product) => (product?.stock ? product.stock > 0 : false),
       foodsWithProducts
     ),
   };
@@ -65,14 +74,34 @@ export const actions: Actions = {
       created_at: dayjs().toISOString(),
     };
 
-    const {
-      data: [food],
-    }: { data: [Food, number] } = await svelxios.post("/food/new", payload);
-    console.log(food);
+    const files: File[] = form.getAll("files").map((file) => file as File);
+    console.log(files);
+
+    const formData = new FormData();
+    formData.append("name", payload.name);
+    formData.append("description", payload.description);
+    formData.append("price", payload.price);
+    formData.append("created_at", payload.created_at);
+
+    for (const file of files) {
+      formData.append("files", file);
+    }
+
+    let foodId = 0;
+
+    try {
+      const {
+        data: [food],
+      }: { data: [Food, number] } = await svelxios.post("/food/new", formData);
+      console.log(food);
+      foodId = food.id;
+    } catch (error: any) {
+      console.error(error.response.data.detail);
+    }
 
     for (const product of products) {
       const { data: idk } = await svelxios.post(
-        `/food/${food.id}/product/${product.id}`,
+        `/food/${foodId}/product/${product.id}`,
         null,
         { params: { quantity: product.quantity } }
       );
@@ -92,11 +121,24 @@ export const actions: Actions = {
         created_at: dayjs().toISOString(),
       };
 
+      const files: File[] = form.getAll("files").map((file) => file as File);
+
+      const formData = new FormData();
+      formData.append("name", payload.name);
+      formData.append("description", payload.description);
+      formData.append("price", payload.price);
+      formData.append("created_at", payload.created_at);
+
+      for (const file of files) {
+        formData.append("files", file);
+      }
+
       console.log(payload);
       const { data: food, status } = await svelxios.patch(
         `/food/${foodId}`,
-        payload
+        formData
       );
+      console.log(food)
 
       if (status >= 400) {
         throw fail(status, food.message);
@@ -113,6 +155,8 @@ export const actions: Actions = {
             quantity: productParsed.quantity,
           };
         });
+      
+      console.log(products)
 
       for (const product of products) {
         const { data: idk } = await svelxios.post(
@@ -121,7 +165,7 @@ export const actions: Actions = {
           { params: { quantity: product.quantity } }
         );
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error.response.data.detail);
     }
   },

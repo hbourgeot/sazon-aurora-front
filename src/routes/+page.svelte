@@ -95,7 +95,7 @@
         </h3>
     </section>
     <!-- Sección de Menú Destacado -->
-    <section class="bg-white py-8">
+    <section class="py-8">
         <div class="container mx-auto px-4">
             <article class="max-w-5xl mx-auto text-center">
                 <h2 class="font-bold text-2xl lg:text-4xl mb-6 gradient">
@@ -170,7 +170,7 @@
     }
 
     header > section {
-        background: linear-gradient(90deg, white 50%, transparent);
+        background: linear-gradient(90deg, #FFF7F7 50%, transparent);
     }
 
     .h-calc {

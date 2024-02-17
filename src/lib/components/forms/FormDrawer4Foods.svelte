@@ -1,10 +1,24 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
   import { page } from "$app/stores";
-  import type { Product } from "$lib/types";
-  import { Button, Drawer, Input, InputNumber, Portal, TextArea } from "stwui";
+  import type { Food, ImageFile, Product } from "$lib/types";
+  import { CloudArrowUp } from "@steeze-ui/heroicons";
+  import { UploadCloud2 } from "@steeze-ui/remix-icons";
+  import { Icon } from "@steeze-ui/svelte-icon";
+  import {
+    Button,
+    Drawer,
+    FilePicker,
+    FilePreview,
+    Input,
+    InputNumber,
+    Portal,
+    TextArea,
+  } from "stwui";
   import { formatNumber } from "stwui/utils";
   import { writable } from "svelte/store";
+  import FilePickerWithPreview from "../FilePickerWithPreview.svelte";
+  import type { SubmitFunction } from "@sveltejs/kit";
 
   export let open: boolean = false;
   export let title: string;
@@ -16,8 +30,14 @@
 <path d="M18 8.5V8.35417C18 6.50171 16.4983 5 14.6458 5H9.5C7.567 5 6 6.567 6 8.5C6 10.433 7.567 12 9.5 12H14.5C16.433 12 18 13.567 18 15.5C18 17.433 16.433 19 14.5 19H9.42708C7.53436 19 6 17.4656 6 15.5729V15.5M12 3V21" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>`;
 
+  let files: ImageFile[];
+
+  $: console.log(files);
+  let form: HTMLFormElement;
+
   let productsSelected = writable<number[]>([]);
   let products: (Product & { quantity: number })[] = $page.data.products;
+  let foods = $page.data.foods;
   let productsHtml: (Product & { quantity: number })[] = [];
   let selectProducts: boolean = false;
   let formFields = [
@@ -45,9 +65,21 @@
       type: "number",
       value: (data && data["price"]) ?? "",
     },
+    {
+      name: "files",
+      label: "Imágenes",
+      type: "file",
+      value: (data && data["files"]) ?? null,
+    },
   ];
 
+  $: if(data?.id){
+    console.log(data);
+    data.images = $page.data.foodsWithImages.find((f: Food) => f.id === data.id)?.images;
+    console.log(data);
+  }
   $: products = $page.data.products;
+  $: foods = $page.data.foods;
   $: formFields = [
     {
       name: "id",
@@ -73,7 +105,41 @@
       type: "number",
       value: (data && data["price"]) ?? "",
     },
+    {
+      name: "files",
+      label: "Imágenes",
+      type: "file",
+      value: (data && data["images"]) ? createBlob() : null,
+    },
   ];
+
+  async function createBlob() {
+    const blobsPromises = data.images.map(async (imageUrl: string) => {
+    try {
+      const response = await fetch(imageUrl);
+      if (!response.ok) throw new Error('Respuesta de red no fue ok');
+
+      const imageBlob = await response.blob(); // Obtiene el blob de la imagen
+      const fileName = `${data.name}.webp`; // O considera extraer el nombre/extension original de la URL
+      const imageFile = new File([imageBlob], fileName, { type: "image/webp" }); // Asumiendo que quieres forzar .webp, ajusta según necesidad
+
+      return imageFile;
+    } catch (error) {
+      console.error('Error descargando imagen:', error);
+      return null; // Maneja el error según tu caso de uso
+    }
+  });
+
+  const blobs = await Promise.all(blobsPromises);
+  files = blobs.filter(blob => blob !== null).map((file, indx) => ({
+    file: file,
+    src: URL.createObjectURL(file),
+    progress: undefined,
+  }));
+
+  console.log(files);
+  return files; 
+}
 
   $: if (data?.products) {
     const dataProducts = data.products.split(",");
@@ -97,6 +163,36 @@
 
   const handleOpenInner: () => void = () => {
     selectProducts = true;
+  };
+
+  const handleButtonClick: (e: Event) => void = (e) => {
+    e.stopPropagation();
+    form.requestSubmit();
+  };
+
+  const handleSubmit: SubmitFunction = ({ formData }) => {
+    for (const product of productsHtml) {
+      if (product !== undefined) {
+        formData.append(
+          "products",
+          JSON.stringify({
+            id: product.id,
+            quantity: product.quantity,
+          }),
+        );
+      }
+    }
+
+    console.log(files, "files");
+    for (const file of files) {
+      console.log(file);
+      formData.append("files", file.file);
+    }
+    return async ({ update }) => {
+      await update();
+      open = false;
+      files = [];
+    };
   };
 
   async function toggleProduct(productId: number, forEdit: boolean = false) {
@@ -146,26 +242,11 @@
       <Drawer.Header slot="header">
         {title}
       </Drawer.Header>
-      <Drawer.Content slot="content">
+      <Drawer.Content slot="content" class="overflow-y-auto overflow-x-hidden">
         <form
           {action}
-          use:enhance={({ formData }) => {
-            for (const product of productsHtml) {
-              if (product !== undefined) {
-                formData.append(
-                  "products",
-                  JSON.stringify({
-                    id: product.id,
-                    quantity: product.quantity,
-                  }),
-                );
-              }
-            }
-            return async ({ update }) => {
-              await update();
-              open = false;
-            };
-          }}
+          bind:this={form}
+          use:enhance={handleSubmit}
           method="POST">
           {#each formFields as field}
             {#if field.type === "textarea"}
@@ -203,9 +284,13 @@
                 value={field.value}>
                 <Input.Label slot="label">{field.label}</Input.Label>
               </Input>
+            {:else if field.type === "file"}
+              <div class="px-3 py-2 w-full">
+                <FilePickerWithPreview bind:myFiles={files} />
+              </div>
             {/if}
           {/each}
-          <div class="my-2 flex flex-col">
+          <div class="px-3 py-2 my-2 flex flex-col">
             {#if $productsSelected.length}
               <p class="text-lg italic font-light my-2">
                 Productos seleccionados
@@ -235,7 +320,9 @@
                           bind:value={productHtml.quantity}
                           min="1"
                           on:input={() => {
-                            if (productHtml.quantity >= (productHtml?.stock ?? 0)) {
+                            if (
+                              productHtml.quantity >= (productHtml?.stock ?? 0)
+                            ) {
                               productHtml.quantity = productHtml?.stock ?? 0;
                             } else if (productHtml.quantity <= 1) {
                               productHtml.quantity = 1;
@@ -246,9 +333,12 @@
                           size="xs"
                           type="default"
                           class="text-white font-bold"
-                          disabled={productHtml.quantity >= (productHtml?.stock ?? 0)}
+                          disabled={productHtml.quantity >=
+                            (productHtml?.stock ?? 0)}
                           on:click={() => {
-                            if (productHtml.quantity >= (productHtml?.stock ?? 0)) {
+                            if (
+                              productHtml.quantity >= (productHtml?.stock ?? 0)
+                            ) {
                               productHtml.quantity = productHtml?.stock ?? 0;
                             } else {
                               productHtml.quantity++;
@@ -270,15 +360,18 @@
               Seleccionar productos
             </Button>
           </div>
-          <Button
-            type="primary"
-            htmlType="submit"
-            class="mx-3 my-2"
-            formaction={action}>
-            Guardar datos
-          </Button>
         </form>
       </Drawer.Content>
+      <Drawer.Footer slot="footer">
+        <Button
+          type="primary"
+          htmlType="submit"
+          variant="primary"
+          class="w-fit px-5"
+          on:click={handleButtonClick}>
+          Guardar platillo
+        </Button>
+      </Drawer.Footer>
       <Portal>
         {#if selectProducts}
           <Drawer handleClose={handleCloseInner}>
