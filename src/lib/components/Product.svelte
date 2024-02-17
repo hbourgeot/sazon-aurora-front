@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import { empty } from "$lib/assets";
   import { addToCart } from "$lib/store/cart.store";
   import type { FoodProduct } from "$lib/types";
@@ -12,16 +13,16 @@
   export let description = "Product Description";
   export let price = 0.0;
   export let image = empty;
-  export let food: any;
+  export let food: FoodProduct = {} as FoodProduct;
 </script>
 
 <Card hoverable bordered={false} elevation="lg" class="w-full">
-  <Card.Header
+  <Card.Header on:click={() => goto(`/menu/platillo/${food.id}`)}
     slot="header"
     class="gradient text-3xl font-extrabold text-center  flex items-center justify-center">
     {title}
   </Card.Header>
-  <Card.Cover slot="cover">
+  <Card.Cover slot="cover"  on:click={() => goto(`/menu/platillo/${food.id}`)}>
     <img
       src={image}
       alt="cover"
