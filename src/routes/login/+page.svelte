@@ -17,7 +17,7 @@
     const { error } = await data.supa.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: window.location.host + "/auth/callback",
+        redirectTo: "/auth/callback",
         queryParams: {
           access_type: "online",
           prompt: "consent",
