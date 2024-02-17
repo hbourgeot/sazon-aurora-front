@@ -25,16 +25,16 @@
 
   let menuItems = [
     {
+      title: "Sobre nosotros",
+      href: '/'
+    },
+    {
       title: "Nuestro menú",
       href: '/menu'
     },
     {
       title: "Ver tu carrito",
-      href: ''
-    },
-    {
-      title: "Sobre nosotros",
-      href: ''
+      href: '/menu'
     },
   ];
 

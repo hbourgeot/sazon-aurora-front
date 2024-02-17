@@ -19,7 +19,7 @@
   });
 </script>
 
-<section class="bg-rose-200 h-full w-full">
+<section class="h-full w-full">
   {#if $page.url.pathname === "/dashboard"}
     <h1 class="text-4xl p-2 top-3 right-2 absolute">
       {#if data.session?.user}
