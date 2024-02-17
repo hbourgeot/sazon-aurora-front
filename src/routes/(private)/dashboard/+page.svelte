@@ -4,6 +4,7 @@
   import { Button, Card, Statistic } from "stwui";
   import { formatNumber } from "stwui/utils";
   import type { PageData } from "./$types";
+  import { goto } from "$app/navigation";
 
   export let data: PageData;
 </script>
@@ -107,16 +108,16 @@
     </section>
     <section class="w-2/5 grid md:grid-cols-2 gap-x-2 gap-y-6">
       <h3 class="text-3xl col-span-2 text-center">Acciones rápidas</h3>
-      <a href="/dashboard/menu">
+      <a href="/menu" class="col-span-2">
         <Card hoverable bordered={false}>
           <Card.Content
             slot="content"
-            class="flex gap-x-2 items-center w-full justify-between text-xl">
+            class="flex gap-x-2 items-center w-full justify-between text-xl !p-5">
             Menú <Icon src={ChevronRight} class="h-4 w-4" />
           </Card.Content>
         </Card>
       </a>
-      <a href="/dashboard/menu">
+      <!-- <a href="/dashboard/menu">
         <Card hoverable bordered={false}>
           <Card.Content
             slot="content"
@@ -124,8 +125,8 @@
             Pedidos <Icon src={ChevronRight} class="h-4 w-4" />
           </Card.Content>
         </Card>
-      </a>
-      <a href="/dashboard/menu" class="col-span-2">
+      </a> -->
+      <!-- <a href="/dashboard/menu" class="col-span-2">
         <Card hoverable bordered={false}>
           <Card.Content
             slot="content"
@@ -135,8 +136,8 @@
               class="h-4 w-4" />
           </Card.Content>
         </Card>
-      </a>
-      <a href="/dashboard/menu">
+      </a> -->
+      <!-- <a href="/dashboard/menu">
         <Card hoverable bordered={false}>
           <Card.Content
             slot="content"
@@ -144,12 +145,12 @@
             Metodos de pago <Icon src={ChevronRight} class="h-4 w-4" />
           </Card.Content>
         </Card>
-      </a>
-      <a href="/dashboard/menu">
+      </a> -->
+      <a href="/dashboard/personal" class="col-span-2">
         <Card hoverable bordered={false}>
           <Card.Content
             slot="content"
-            class="flex gap-x-2 items-center w-full justify-between text-xl">
+            class="flex gap-x-2 items-center w-full justify-between text-xl !p-5">
             Personal <Icon src={ChevronRight} class="h-4 w-4" />
           </Card.Content>
         </Card>
