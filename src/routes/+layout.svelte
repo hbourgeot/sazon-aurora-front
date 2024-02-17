@@ -28,7 +28,7 @@
         <Icon src="{Bars3}" class="!h-8 !w-8"/>
     </Button>
   <Layout.Content>
-    <Layout.Content.Body class="flex items-center justify-center min-h-[200px] w-full">
+    <Layout.Content.Body class="flex items-center justify-center min-h-[200px] w-full bg-rose-200">
       <slot />
     </Layout.Content.Body>
   </Layout.Content>
@@ -38,7 +38,6 @@
 <style>
   :global(body){
     font-family: 'Raleway Variable', sans-serif;
-    background-color: #FFF7F7;
   }
   
   :global(h1, h2, h3, h4, h5, h6){

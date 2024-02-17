@@ -82,8 +82,8 @@
                 todo el sazón que te podemos ofrecer
             </h2>
             <div class="flex justify-between w-fit gap-x-4 py-2">
-                <Button type="primary">Ordena ahora</Button>
-                <Button type="default">Ver menú</Button>
+                <Button type="primary" href="/menu">Ordena ahora</Button>
+                <Button type="default" href="/menu">Ver menú</Button>
             </div>
         </section>
         <div class="lg:w-2/5 hidden lg:block"></div>
@@ -95,7 +95,7 @@
         </h3>
     </section>
     <!-- Sección de Menú Destacado -->
-    <section class="py-8">
+    <section class="py-8 bg-rose-200">
         <div class="container mx-auto px-4">
             <article class="max-w-5xl mx-auto text-center">
                 <h2 class="font-bold text-2xl lg:text-4xl mb-6 gradient">
@@ -170,7 +170,7 @@
     }
 
     header > section {
-        background: linear-gradient(90deg, #FFF7F7 50%, transparent);
+        background: linear-gradient(90deg, #fecdd3 60%, transparent);
     }
 
     .h-calc {
