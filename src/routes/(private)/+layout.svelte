@@ -8,8 +8,8 @@
 
   export let data: LayoutData;
 
-  // @ts-ignore
   $: if (
+    // @ts-ignore
     (!data?.session?.user || data.session?.user.database.role === 3) &&
     browser
   )
