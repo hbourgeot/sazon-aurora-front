@@ -1,9 +1,10 @@
 <script lang="ts">
+  import "../app.pcss";
   // Third Components
   import { Bars3 } from "@steeze-ui/heroicons";
   import { Icon } from "@steeze-ui/svelte-icon";
   import { Button, Layout } from "stwui";
-// My components
+  // My components
   import Sidebar from "$lib/components/Sidebar.svelte";
   // Styles
   import "@fontsource-variable/raleway";
@@ -18,22 +19,22 @@
 
   let y: number;
 </script>
-<svelte:window bind:scrollY="{y}"/>
+<svelte:window bind:scrolly="{y}"></svelte:window>
 <svelte:head>
-  <link href='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
 </svelte:head>
 
 <Layout>
     <Button type="primary" on:click="{openDrawer}" shape="circle" class="absolute top-4 left-6 w-fit h-fit z-10">
-        <Icon src="{Bars3}" class="!h-8 !w-8"/>
+        <Icon src="{Bars3}" class="!h-8 !w-8"></Icon>
     </Button>
   <Layout.Content>
     <Layout.Content.Body class="flex items-center justify-center min-h-[200px] w-full bg-rose-200">
-      <slot />
+      <slot></slot>
     </Layout.Content.Body>
   </Layout.Content>
 </Layout>
-<Sidebar open={drawer.open}/>
+<Sidebar open="{drawer.open}/">
 
 <style>
   :global(body){
@@ -56,4 +57,4 @@
 :global(html, body){
   height: 100vh;
 }
-</style>
+</style></Sidebar>
