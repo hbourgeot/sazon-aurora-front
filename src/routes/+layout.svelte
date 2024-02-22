@@ -17,9 +17,7 @@
     drawer.open = true;
   }
 
-  let y: number;
 </script>
-<svelte:window bind:scrolly="{y}"></svelte:window>
 <svelte:head>
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
 </svelte:head>

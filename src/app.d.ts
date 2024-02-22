@@ -3,10 +3,18 @@
 
 import { AxiosInstance } from "axios";
   
+
+import { AxiosInstance } from "axios";
+  
 declare global {
 	namespace App {
 		// interface Error {}
 		// interface Locals {}
+
+    interface Locals {
+      svelxios: AxiosInstance;
+    }
+  
 
     interface Locals {
       svelxios: AxiosInstance;

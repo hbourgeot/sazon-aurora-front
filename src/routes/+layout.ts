@@ -9,6 +9,8 @@ import type { LayoutLoad } from "./$types";
 export const load: LayoutLoad = async ({ data, depends }) => {
   depends("supabase:auth");
 
+  console.log(PUBLIC_SUPABASE_KEY, PUBLIC_SUPABASE_URL)
+
   const supabase = createBrowserClient<SupaDB>(
     PUBLIC_SUPABASE_URL,
     PUBLIC_SUPABASE_KEY,
