@@ -3,7 +3,6 @@
   import { Icon } from "@steeze-ui/svelte-icon";
   import type { PageData } from "./$types";
   import { ShoppingCart } from "@steeze-ui/heroicons";
-  import { tooltip } from "stwui/actions";
   import { goto } from "$app/navigation";
   import { cart } from "$lib/store/cart.store";
   import Cart from "$lib/components/Cart.svelte";
@@ -192,31 +191,10 @@
   };
 </script>
 
-<Cart open={drawer.open} on:pagar={generarInvoice} />
 <main class="mx-auto h-full !p-4">
-  <button
-    class="fixed top-6 right-6 rounded-full h-11 w-11 p-2 flex justify-center items-center {$cart
-      .products.length > 0
-      ? 'text-white bg-primary'
-      : 'text-primary'}"
-    on:click={() => (drawer.open = true)}
-    use:tooltip={{
-      placement: "left",
-      content: "Ver tu carrito",
-      arrow: true,
-      animation: "scale",
-      theme: "primary",
-    }}>
-    <Icon src={ShoppingCart} class="!h-10 !w-10" />
-    {#if $cart.products.length > 0}
-      <span
-        class="absolute -top-1 -right-1 bg-hover text-white rounded-full h-5 w-5 flex justify-center items-center font-sans">
-        {$cart.products.length}
-      </span>
-    {/if}
-  </button>
-  <h1 class="p-4 my-5 lg:my-10">
-    Menú del Sazón de <span class="gradient">Aurora</span>
+  <Cart on:pagar={generarInvoice} />
+  <h1 class="p-4 my-5 lg:my-10 text-2xl lg:text-4xl">
+    Menú del Sazón de <span class="gradient font-bold">Aurora</span>
   </h1>
   <section class="gridify">
     {#each data.foods as food}
