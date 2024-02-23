@@ -11,7 +11,6 @@
     ShoppingCart,
   } from "@steeze-ui/heroicons";
   import { Icon } from "@steeze-ui/svelte-icon";
-  import { formatNumber } from "stwui/utils";
   import { onMount } from "svelte";
   import { slide } from "svelte/transition";
 
@@ -93,27 +92,27 @@
       <div class="p-4 mx-auto w-full">
         <div
           class="mx-auto lg:px-5 w-full min-h-[calc(100vh-100px)] flex flex-col lg:flex-row gap-x-10 items-center justify-center md:w-4/5">
-          <button
-              class="absolute top-[4%] left-[15%] p-3 rounded-full bg-secondary flex gap-x-3 shadow-xl hover:bg-default hover:text-white transition-colors"
-              on:click={() => goto("/menu")}>
+          <a
+              class="absolute top-[4%] left-[15%] p-3 rounded-full bg-red-400 flex gap-x-3 shadow-xl hover:bg-red-600 hover:text-white transition-colors"
+              href="/menu">
               <Icon class="h-5 w-5" src={ChevronLeft} /> Volver atrás
-            </button>
+            </a>
           <figure
-            class="image mx-auto lg:ml-auto flex lg:w-1/2 h-[450px] rounded-lg justify-center">
+            class="mx-auto lg:ml-auto flex lg:w-1/2 h-[450px] rounded-lg justify-center">
             <div class="relative">
               <!-- go back button href="/menu" -->
               {#if selectedProduct?.images}
                 <img
                   loading="eager"
                   alt="producto"
-                  class="h-full w-full object-scale-down mb-3 shadow-xl"
+                  class="h-full w-full object-scale-down mb-3 shadow-xl image"
                   src={selectedProduct?.images[actualImg] ?? empty}
                   transition:slide={{ axis: "x" }} />
               {:else}
                 <img
                   loading="eager"
                   alt="producto"
-                  class="hh-full w-full object-scale-down mb-3 shadow-xl"
+                  class="hh-full w-full object-scale-down mb-3 shadow-xl image"
                   src={empty}
                   transition:slide={{ axis: "x" }} />
               {/if}
@@ -190,10 +189,9 @@
               </p>
 
               <p class="leading-relaxed text-lg lg:text-2xl font-medium text-gray-600 mb-6 max-w-md my-2">
-                {formatNumber(selectedProduct?.price ?? 0, {
+                {selectedProduct?.price.toLocaleString("en-US", {
                   style: "currency",
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
+                  currency: "USD",
                 })}
               </p>
 

@@ -198,12 +198,14 @@
   </h1>
   <section class="gridify">
     {#each data.foods as food}
+    <a href="/menu/platillo/{food.id}" class="w-full">
       <Product
         {food}
         title={food.name}
         description={food?.description ?? ""}
         price={food.price}
         image={food.image} />
+    </a>
     {/each}
   </section>
 </main>

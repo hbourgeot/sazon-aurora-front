@@ -36,13 +36,13 @@
 <Sheet.Root>
 	<Sheet.Trigger asChild let:builder>
 		<Button
-			class="fixed right-6 top-6 flex h-11 w-11 items-center justify-center rounded-full p-2 {$cart
+			class="fixed right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full p-2 {$cart
 				.products.length > 0
 				? 'bg-primary text-white'
 				: 'text-primary'}"
 			builders={[builder]}
 		>
-			<Icon src={ShoppingCart} class="!h-10 !w-10" />
+			<Icon src={ShoppingCart} class="!h-10 !w-10 text-white" />
 			{#if $cart.products.length > 0}
 				<span
 					class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive font-sans text-white"
@@ -78,7 +78,7 @@
 						<div class="flex w-1/3 flex-col justify-center">
 							<p class="text-center font-sans text-lg font-semibold">
 								{(product.price * product.amount)
-									.toLocaleString('es-MX', {
+									.toLocaleString('en-US', {
 										style: 'currency',
 										currency: 'USD'
 									})
@@ -124,7 +124,7 @@
 						</Sheet.Header>
 						<p>
 							Total a pagar: <span class="font-sans"
-								>{$cart.totalAmount.toLocaleString('es-MX', {
+								>{$cart.totalAmount.toLocaleString('en-US', {
 									style: 'currency',
 									currency: 'USD'
 								})}</span

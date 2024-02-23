@@ -17,14 +17,11 @@
 </script>
 
 <Card.Root class="w-full">
-	<Card.Header
-		on:click={() => goto(`/menu/platillo/${food.id}`)}
-		class="flex items-center justify-center text-center font-extrabold"
-	>
+	<Card.Header class="flex items-center justify-center text-center font-extrabold">
 		<Card.Title class="gradient text-3xl">{title}</Card.Title>
 		<Card.Description class="truncate">{description}</Card.Description>
 	</Card.Header>
-	<Card.Content class="truncate p-1" on:click={() => goto(`/menu/platillo/${food.id}`)}>
+	<Card.Content class="truncate p-1">
 		<img
 			src={image}
 			alt="cover"
@@ -33,12 +30,17 @@
 	</Card.Content>
 	<Card.Footer class="flex items-center justify-between">
 		<span class="p-2 text-2xl font-light">
-			{price.toLocaleString('es-MX', {
+			{price.toLocaleString('en-US', {
 				style: 'currency',
 				currency: 'USD'
 			})}
 		</span>
-		<Button variant="default" class="rounded-full !font-bold w-11 h-11" size="icon" on:click={() => addToCart(food)}>
+		<Button
+			variant="default"
+			class="h-11 w-11 rounded-full !font-bold"
+			size="icon"
+			on:click={() => addToCart(food)}
+		>
 			<Tooltip.Root>
 				<Tooltip.Trigger asChild let:builder class="w-full">
 					<Button variant="link" builders={[builder]} size="icon" class="w-full text-white">

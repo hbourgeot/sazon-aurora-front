@@ -1,6 +1,5 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import BreadCrumbs from "$lib/components/BreadCrumbs.svelte";
   import { onMount } from "svelte";
   import type { LayoutData } from "./$types";
   import { goto } from "$app/navigation";
@@ -29,8 +28,6 @@
         </span>
       {/if}
     </h1>
-  {:else}
-    <BreadCrumbs className="absolute top-3 right-5" />
   {/if}
   <div class="content">
     <slot />
