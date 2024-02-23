@@ -1,13 +1,9 @@
 <script lang="ts">
-    import {Button, Card, Media} from "stwui";
     import {onMount} from "svelte";
-    import mapbox from "mapbox-gl";
     import {browser} from "$app/environment";
-    import mapboxgl from "mapbox-gl";
     import {burger, cachapa, cesar} from "$lib/assets";
-
-    mapbox.accessToken =
-        "pk.eyJ1IjoiaGJvdXJnZW90IiwiYSI6ImNscGVrYzNleDBlaTAyanF6bmNkeGFvbXQifQ.ccNVKHCjOECTaRyVmYiSfQ";
+	import Button from "$lib/components/ui/button/button.svelte";
+	import * as Card from "$lib/components/ui/card";
 
     const ourSpecials = [
         {
@@ -37,36 +33,6 @@
             textoActual = textos[indiceActual];
         }, 2500); // Cambia cada 3 segundos
 
-        if (browser) {
-            const map = new mapbox.Map({
-                container: "map",
-                style: "mapbox://styles/mapbox/streets-v11",
-                center: [-67.5889635927875, 10.266184416869562],
-                zoom: 15,
-            });
-
-            const popup = new mapbox.Popup({
-                className: "mapbox-popup",
-                closeOnMove: true,
-                closeButton: true,
-                maxWidth: "400px",
-                focusAfterOpen: true,
-            })
-                .setHTML(
-                    "Hola, si ves esto, sígueme en <a href='https://github.com/hbourgeot' class='link'>github</a>"
-                )
-                .addTo(map);
-
-            map.addControl(new mapboxgl.NavigationControl());
-            const marker = new mapbox.Marker({color: "red"})
-                .setPopup(popup)
-                .on("click", () => {
-                    marker.togglePopup();
-                })
-                .setLngLat([-67.5889635927875, 10.266184416869562])
-                .addTo(map);
-        }
-
         return () => {
             clearInterval(intervalo);
         };
@@ -82,18 +48,16 @@
                 todo el sazón que te podemos ofrecer
             </h2>
             <div class="flex justify-between w-fit gap-x-4 py-2">
-                <Button type="primary" href="/menu">Ordena ahora</Button>
-                <Button type="default" href="/menu">Ver menú</Button>
+                <Button type="button" variant="default" >
+                    <a href="/menu" class="w-full h-full">Ordena ahora</a>
+                </Button>
+                <Button type="button" variant="default" >
+                    <a href="/menu" class="w-full h-full">Ver menú</a>
+                </Button>
             </div>
         </section>
         <div class="lg:w-2/5 hidden lg:block"></div>
     </header>
-    <section class="!relative w-full h-calc">
-        <div class="full-screen-map" id="map"></div>
-        <h3 class="map-text text-2xl lg:text-3xl text-center font-bold">
-            ¿Dónde puedes ubicarnos?
-        </h3>
-    </section>
     <!-- Sección de Menú Destacado -->
     <section class="py-8 bg-rose-200">
         <div class="container mx-auto px-4">
@@ -103,25 +67,19 @@
                 </h2>
                 <div class="grid grid-cols-3 gap-4">
                     {#each ourSpecials as special}
-                        <Card class="max-w-[500px] m-auto" hoverable>
-                            <Card.Cover slot="cover">
+                        <Card.Root class="max-w-[500px] m-auto">
+                            <Card.Header>
+                                <Card.Title>{special.title}</Card.Title>
+                                <Card.Description>{special.desc}</Card.Description>
+                            </Card.Header>
+                            <Card.Content>
                                 <img
                                         src="{special.img}"
                                         alt="cover"
                                         class="object-cover object-center w-full h-[300px] aspect-1 p-3"
                                 />
-                            </Card.Cover>
-                            <Card.Content slot="content">
-                                <Media>
-                                    <Media.Content>
-                                        <Media.Content.Title>{special.title}</Media.Content.Title>
-                                        <Media.Content.Description
-                                        >{special.desc}</Media.Content.Description
-                                        >
-                                    </Media.Content>
-                                </Media>
                             </Card.Content>
-                        </Card>
+                        </Card.Root>
                     {/each}
                 </div>
             </article>

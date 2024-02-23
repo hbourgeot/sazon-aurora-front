@@ -17,9 +17,9 @@ export const load = (async ({ locals: { svelxios } }) => {
     price: dish.price,
     created_at: dayjs(dish.created_at).format("DD/MM/YYYY"),
     products:
-      dish.products.map((product: any) => product.product.name).join(", ")
+      dish.products.map((product: any) => product.product?.name).join(", ")
         .length > 1
-        ? dish.products.map((product: any) => product.product.name).join(", ")
+        ? dish.products.map((product: any) => product.product?.name).join(", ")
         : "No hay productos",
   }));
 

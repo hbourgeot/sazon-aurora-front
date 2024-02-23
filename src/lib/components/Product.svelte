@@ -1,67 +1,74 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
-  import { empty } from "$lib/assets";
-  import { addToCart } from "$lib/store/cart.store";
-  import type { FoodProduct } from "$lib/types";
-  import { Plus } from "@steeze-ui/heroicons";
-  import { Icon } from "@steeze-ui/svelte-icon";
-  import { Card } from "stwui";
-  import { tooltip } from 'stwui/actions';
-  import { formatNumber } from "stwui/utils";
+	import { goto } from '$app/navigation';
+	import { empty } from '$lib/assets';
+	import { addToCart } from '$lib/store/cart.store';
+	import type { FoodProduct } from '$lib/types';
+	import { Plus } from '@steeze-ui/heroicons';
+	import { Icon } from '@steeze-ui/svelte-icon';
+	import * as Card from '$lib/components/ui/card';
+	import * as Tooltip from '$lib/components/ui/tooltip';
+	import Button from './ui/button/button.svelte';
 
-  export let title = "Product Title";
-  export let description = "Product Description";
-  export let price = 0.0;
-  export let image = empty;
-  export let food: FoodProduct = {} as FoodProduct;
+	export let title = 'Product Title';
+	export let description = 'Product Description';
+	export let price = 0.0;
+	export let image = empty;
+	export let food: FoodProduct = {} as FoodProduct;
 </script>
 
-<Card hoverable bordered={false} elevation="lg" class="w-full">
-  <Card.Header on:click={() => goto(`/menu/platillo/${food.id}`)}
-    slot="header"
-    class="gradient text-3xl font-extrabold text-center  flex items-center justify-center">
-    {title}
-  </Card.Header>
-  <Card.Cover slot="cover"  on:click={() => goto(`/menu/platillo/${food.id}`)}>
-    <img
-      src={image}
-      alt="cover"
-      class="object-cover object-top max-w-[600px] w-full h-[180px] aspect-1 p-3" />
-  </Card.Cover>
-  <Card.Content slot="content" class="py-2 px-1 truncate">
-    <p class="truncate font-semibold">{description}</p>
-  </Card.Content>
-  <Card.Footer slot="footer" class="flex justify-between items-center">
-    <span class="font-light text-2xl p-2">
-      {formatNumber(price, {
-        style: "currency",
-        maximumFractionDigits: 2,
-        minimumFractionDigits: 2,
-      })}
-    </span>
-    <button class="!font-bold text-primary rounded-full hover:text-white hover:bg-primary" use:tooltip={{
-      placement: "bottom",
-      content: 'Áñadir al carrito',
-      arrow: true,
-      animation: "scale",
-      theme: "primary",
-    }} on:click={() => addToCart(food)}
-    >
-      <Icon src={Plus} theme="mini" class="!h-9 !w-9 border-[4px] border-primary rounded-full" />
-    </button>
-  </Card.Footer>
-</Card>
+<Card.Root class="w-full">
+	<Card.Header class="flex items-center justify-center text-center font-extrabold">
+		<Card.Title class="gradient text-3xl">{title}</Card.Title>
+		<Card.Description class="truncate">{description}</Card.Description>
+	</Card.Header>
+	<Card.Content class="truncate p-1">
+		<img
+			src={image}
+			alt="cover"
+			class="aspect-1 h-[180px] w-full max-w-[600px] object-cover object-top p-3"
+		/>
+	</Card.Content>
+	<Card.Footer class="flex items-center justify-between">
+		<span class="p-2 text-2xl font-light">
+			{price.toLocaleString('en-US', {
+				style: 'currency',
+				currency: 'USD'
+			})}
+		</span>
+		<Button
+			variant="default"
+			class="h-11 w-11 rounded-full !font-bold"
+			size="icon"
+			on:click={() => addToCart(food)}
+		>
+			<Tooltip.Root>
+				<Tooltip.Trigger asChild let:builder class="w-full">
+					<Button variant="link" builders={[builder]} size="icon" class="w-full text-white">
+						<Icon
+							src={Plus}
+							theme="mini"
+							class="!h-9 !w-9 rounded-full border-[4px] border-white"
+						/>
+					</Button>
+				</Tooltip.Trigger>
+				<Tooltip.Content>
+					<p class="text-center">Añadir al carrito</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
+		</Button>
+	</Card.Footer>
+</Card.Root>
 
 <style>
-  :global(.stwui-card > *) {
-    border: none !important;
-  }
+	:global(.stwui-card > *) {
+		border: none !important;
+	}
 
-  :global(.stwui-card-actions-action) {
-    border-color: transparent !important;
-  }
+	:global(.stwui-card-actions-action) {
+		border-color: transparent !important;
+	}
 
-  :global(.stwui-card-content, .stwui-card-footer, .stwui-card-header) {
-    padding: 0.5rem 1rem;
-  }
+	:global(.stwui-card-content, .stwui-card-footer, .stwui-card-header) {
+		padding: 0.5rem 1rem;
+	}
 </style>
