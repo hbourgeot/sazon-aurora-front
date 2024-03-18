@@ -1,12 +1,14 @@
 <script lang="ts">
   // Importaciones de componentes stwui si es necesario
   import { login } from "$lib/assets";
-  import { Button, Divider, Input } from "stwui";
   import { Icon } from "@steeze-ui/svelte-icon";
   import { Google, Facebook } from "@steeze-ui/remix-icons";
   import type { PageData } from "./$types";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
+	import { Input } from "$lib/components/ui/input";
+	import Button from "$lib/components/ui/button/button.svelte";
+	import Separator from "$lib/components/ui/separator/separator.svelte";
 
   export let data: PageData;
   let email = "";
@@ -64,19 +66,17 @@
             bind:value={password}
             placeholder="Contraseña"
             type="password"
-            showPasswordToggle
             class="w-full" />
           <Button
-            class="w-full bg-secondary-content hover:bg-primary-hover text-primary-content" on:click={signInPassword}>
+          variant="default"
+            class="w-full hover:bg-primary-hover" on:click={signInPassword}>
             Entrar
           </Button>
-          <Divider>
-            <Divider.Label slot="label">O</Divider.Label>
-          </Divider>
+          <Separator />
           <div class="flex justify-between gap-x-3 my-2">
-            <Button
+            <Button variant="destructive"
               on:click={signInGoogle}
-              class="w-full bg-danger hover:bg-danger-hover text-danger-content">
+              class="w-full hover:bg-destructive-hover">
               <Icon src={Google} class="h-5 w-5 font-bold mr-2" theme="solid" />
               Google
             </Button>
