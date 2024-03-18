@@ -31,7 +31,6 @@
     }
 
     selectedProduct = $page.data.food;
-    console.log(selectedProduct);
 
     displayImgs = selectedProduct?.images ?? [];
   }
@@ -81,7 +80,6 @@
     });
   });
 
-  $: console.log(recomendaciones);
 </script>
 
 <main class="min-h-full ">
@@ -222,7 +220,7 @@
                 <ProductCard
                   description={item.description}
                   food={item}
-                  image={item?.images ? item.images[0] : console.log(item.image)}
+                  image={item?.images ? item.images[0] : ""}
                   price={item.price}
                   title={item.name} />
               {/each}

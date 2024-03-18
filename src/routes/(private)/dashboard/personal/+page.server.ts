@@ -28,7 +28,6 @@ export const actions: Actions = {
     };
 
     const { data } = await svelxios.post("/user/new", payload);
-    console.log(data);
     if (data.error) {
       return fail(400, {
         status: 400,

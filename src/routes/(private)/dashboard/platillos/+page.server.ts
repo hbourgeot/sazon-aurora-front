@@ -8,7 +8,6 @@ export const load = (async ({ locals: { svelxios } }) => {
     "/food/all"
   );
 
-  console.log(dishes);
 
   const foods = dishes.map((dish: any) => ({
     id: dish.id,
@@ -75,7 +74,6 @@ export const actions: Actions = {
     };
 
     const files: File[] = form.getAll("files").map((file) => file as File);
-    console.log(files);
 
     const formData = new FormData();
     formData.append("name", payload.name);
@@ -93,7 +91,6 @@ export const actions: Actions = {
       const {
         data: [food],
       }: { data: [Food, number] } = await svelxios.post("/food/new", formData);
-      console.log(food);
       foodId = food.id;
     } catch (error: any) {
       console.error(error.response.data.detail);
@@ -133,12 +130,10 @@ export const actions: Actions = {
         formData.append("files", file);
       }
 
-      console.log(payload);
       const { data: food, status } = await svelxios.patch(
         `/food/${foodId}`,
         formData
       );
-      console.log(food)
 
       if (status >= 400) {
         throw fail(status, food.message);
@@ -156,7 +151,6 @@ export const actions: Actions = {
           };
         });
       
-      console.log(products)
 
       for (const product of products) {
         const { data: idk } = await svelxios.post(

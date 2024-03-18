@@ -15,7 +15,6 @@ export const addToCart = (product: FoodProduct) => {
       state.products = [...state.products, { ...product, amount: 1 }];
     }
     state.totalAmount += product.price;
-    console.log(state);
     return state;
   });
 }

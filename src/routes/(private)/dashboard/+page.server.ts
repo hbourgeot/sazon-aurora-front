@@ -9,8 +9,6 @@ export const load = (async ({ locals: { svelxios } }) => {
     const { data: proveedoresData } = await svelxios.get<Provider[]>('/provider/all');
     const { data: clientesData } = await svelxios.get<User[]>('/user/all');
 
-    console.log(proveedoresData)
-
     const productosTotales = productosData.reduce((acc, product) => product.stock ? acc + product.stock : acc, 0);
     const proveedoresTotales = proveedoresData.length;
     const clientesTotales = clientesData.length;
@@ -20,8 +18,6 @@ export const load = (async ({ locals: { svelxios } }) => {
 
     const ventasImg = `data:image/png;base64,${base64Ventas}`;
     const productosImg = `data:image/png;base64,${base64Productos}`;
-
-    console.log(proveedoresTotales)
 
     return { ventasImg, productosImg, ventas: ventasData, productosTotales, proveedoresTotales, clientesTotales};
 }) satisfies PageServerLoad;

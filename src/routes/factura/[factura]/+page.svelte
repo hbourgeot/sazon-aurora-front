@@ -14,7 +14,6 @@
     const blob = await res.blob();
     file = URL.createObjectURL(blob);
   };
-  $: console.log(file);
 </script>
 
 <section>

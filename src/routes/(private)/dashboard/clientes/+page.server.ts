@@ -23,7 +23,6 @@ export const load = (async ({ locals: { svelxios } }) => {
       });
     }
   });
-  console.log(usersWithoutPassword);
   //@ts-ignore
   return {
     users: usersWithoutPassword,

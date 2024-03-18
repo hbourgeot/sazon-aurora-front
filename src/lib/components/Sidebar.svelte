@@ -52,8 +52,6 @@
 		menuItems = menuItems.filter((item) => item.title !== 'Inicio administrador');
 	}
 
-	$: console.log($page.data?.session);
-
 	onMount(() => {
 		if ($page.data?.session?.user && $page.data?.session?.user?.database?.role === 1) {
 			menuItems.push({

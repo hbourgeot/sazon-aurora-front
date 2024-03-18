@@ -17,12 +17,11 @@
   export let data: PageData;
 
   async function signUp() {
-    const { data: res, error } = await data.supa.auth.signUp({
+    const { data: res, error } = await data.supa!.auth.signUp({
       email: inputEmail,
       password: inputPassword,
     });
 
-    console.log(res, error);
   }
 
   const tipos: SelectOption[] = [

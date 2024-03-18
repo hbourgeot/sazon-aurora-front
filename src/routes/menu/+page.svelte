@@ -46,7 +46,6 @@
           updated_at: new Date().toISOString(),
         };
         
-        console.log(cartPayload);
         //@ts-ignore
         const { error: upsertError } = await data.supa
         ?.from("cart")
@@ -70,7 +69,7 @@
 
       for (const item of cartItems) {
         //@ts-ignore
-        const {error: getError, data: existingItem} = await data.supa?.from("cart_details").select("id").eq("cart_id", existingCart?.id).eq("food_id", item.food_id).maybeSingle();
+        const {error: getError, data: existingItem} = await data.supa!.from("cart_details").select("id").eq("cart_id", existingCart?.id).eq("food_id", item.food_id).maybeSingle();
         if (getError) {
           console.error(getError);
           return;
@@ -81,13 +80,12 @@
         }
 
         //@ts-ignore
-        const { error: insertError } = await data.supa?.from("cart_details").upsert(item);
+        const { error: insertError } = await data.supa!.from("cart_details").upsert(item);
         if (insertError) {
           console.error(insertError);
           return;
         }
 
-        console.log("Cart details inserted!");
       }
     }
   };
@@ -95,26 +93,23 @@
   const getCart = async () => {
     //@ts-ignore
     const user = data?.session?.user?.database?.id;
-    console.log(user);
     //@ts-ignore
-    const { error, data: cart} = await data.supa?.from("cart").select("*").eq("user_id", user).maybeSingle();
+    const { error, data: cart} = await data.supa!.from("cart").select("*").eq("user_id", user).maybeSingle();
     if (error) {
       console.error(error);
       return;
     }
-    console.log(cart);
 
     if(!cart) {
       return;
     }
     //@ts-ignore
-    const { error: detailsError, data: cartDetails } = await data.supa?.from("cart_details").select("*, foods(id, name, description)").eq("cart_id", cart.id);
+    const { error: detailsError, data: cartDetails } = await data.supa!.from("cart_details").select("*, foods(id, name, description)").eq("cart_id", cart.id);
     if (detailsError) {
       console.error(detailsError);
       return;
     }
 
-    console.log(cartDetails);
 
     let products = cartDetails.map((detail: CartDetails) => {
       return {
@@ -147,14 +142,13 @@
     const user = data?.session?.user?.database?.id;
 
     //@ts-ignore
-    const {error, data: [newInvoice]} = await data.supa?.from("invoices").insert({
+    const {error, data: [newInvoice]} = await data.supa!.from("invoices").insert({
       created_at: new Date().toISOString(),
       user_id: user,
       total: $cart.totalAmount,
       status: "PAGADO"
     }).select();
 
-    console.log(newInvoice);
 
     if (error) {
       console.error(error);
@@ -171,7 +165,7 @@
 
       try{
       //@ts-ignore
-      const { error: insertError } = await data.supa?.from("invoice_details").insert(invoicePayload);
+      const { error: insertError } = await data.supa!.from("invoice_details").insert(invoicePayload);
       if (insertError) {
         console.error(insertError);
         return;
@@ -181,13 +175,12 @@
       }
     }
 
-    console.log("Invoice inserted!");
 
     $cart.products = [];
     drawer.open = false;
 
     //@ts-ignore
-    await data.supa?.from("cart").delete().eq("user_id", user);
+    await data.supa!.from("cart").delete().eq("user_id", user);
   };
 </script>
 

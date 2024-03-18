@@ -3,7 +3,6 @@ import type { PageServerLoad } from './$types';
 
 export const load = (async ({ locals: { svelxios } }) => {
     const { data } = await svelxios.get<FoodProduct[]>('/food/all');
-    console.log(data);
     const foods = data.map((food) => ({
         id: food.id,
         name: food.name,
