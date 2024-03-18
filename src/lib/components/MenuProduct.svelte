@@ -218,7 +218,7 @@
             <div class="products my-8 px-8 grid justify-center gap-8 w-full">
               {#each recomendaciones as item}
                 <ProductCard
-                  description={item.description}
+                  description={item?.description ?? ""}
                   food={item}
                   image={item?.images ? item.images[0] : ""}
                   price={item.price}
