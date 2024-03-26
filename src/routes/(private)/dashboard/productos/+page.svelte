@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Table from "$lib/components/Table.svelte";
+  import Table from "$lib/components/PlatillosTable.svelte";
   import FormDrawer4Products from "$lib/components/forms/FormDrawer4Products.svelte";
   import type { TableColumn } from "stwui/types";
   import type { PageData } from "./$types";

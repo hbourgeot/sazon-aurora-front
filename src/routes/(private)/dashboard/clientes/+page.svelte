@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Table from "$lib/components/Table.svelte";
+  import Table from "$lib/components/PlatillosTable.svelte";
 
   import { setBreadcrumbs } from "$lib/store/breadcrumbs.store";
   import type { Crumb } from "$lib/types";

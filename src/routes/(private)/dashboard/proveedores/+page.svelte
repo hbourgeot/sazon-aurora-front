@@ -2,7 +2,7 @@
   import type { PageData } from "./$types";
   //   import Table from "$lib/components/Table.svelte";
   import type { TableColumn } from "stwui/types";
-  import Table from "$lib/components/Table.svelte";
+  import Table from "$lib/components/PlatillosTable.svelte";
   import FormDrawer4Providers from "$lib/components/forms/FormDrawer4Providers.svelte";
   import type { Crumb } from "$lib/types";
   import { setBreadcrumbs } from "$lib/store/breadcrumbs.store";
