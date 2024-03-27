@@ -2,7 +2,7 @@
 	import type { Food } from '$lib/types';
 	import { createTable, Render, Subscribe, createRender } from 'svelte-headless-table';
 	import { addPagination, addSortBy } from 'svelte-headless-table/plugins';
-	import { readable } from 'svelte/store';
+	import { readable, writable } from 'svelte/store';
 	import * as Table from '$lib/components/ui/table';
 	import TableActions from './TableActions.svelte';
 	import { Button } from '$lib/components/ui/button';
@@ -11,8 +11,10 @@
 	import PlatillosFormDrawer from './PlatillosFormDrawer.svelte';
 
 	export let data: (Food & { products: string })[];
+	const foods = writable(data);
+	$: $foods = data;
 
-	const table = createTable(readable(data), {
+	const table = createTable(foods, {
 		page: addPagination({initialPageSize: 7}),
     sort: addSortBy()
 	});
