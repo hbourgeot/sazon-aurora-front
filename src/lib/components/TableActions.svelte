@@ -143,7 +143,9 @@
 			{
 				label: 'Copiar Documento de Identidad',
 				action: () => {
-					navigator.clipboard.writeText(roles((data as User)?.document.toString()) ?? 'No tiene un documento de identidad');
+					navigator.clipboard.writeText(
+						(data as User)?.document ?? 'No tiene un documento de identidad'
+					);
 				}
 			}
 		]
@@ -156,7 +158,7 @@
 	{:else if tipo === 'product'}
 		<ProductsFormDrawer title="Editar Producto" {data} action="?/edit" />
 	{:else if tipo === 'provider'}
-	<ProvidersFormDrawer title="Editar proveedor" {data} action="?/edit" />
+		<ProvidersFormDrawer title="Editar proveedor" {data} action="?/edit" />
 	{/if}
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger asChild let:builder>
@@ -168,9 +170,11 @@
 		<DropdownMenu.Content>
 			<DropdownMenu.Label>Acciones</DropdownMenu.Label>
 			<DropdownMenu.Separator />
-			{#each tableActions[tipo] as action}
-				<DropdownMenu.Item on:click={action.action}>{action.label}</DropdownMenu.Item>
-			{/each}
+			{#if tipo !== 'hide'}
+				{#each tableActions[tipo] as action}
+					<DropdownMenu.Item on:click={action.action}>{action.label}</DropdownMenu.Item>
+				{/each}
+			{/if}
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
 </div>
