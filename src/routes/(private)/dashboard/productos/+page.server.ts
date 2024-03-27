@@ -44,7 +44,6 @@ export const actions: Actions = {
         "/product/new",
         payload
       );
-      console.log(product);
     } catch (error: any) {
       console.log(error.response);
     }
@@ -71,7 +70,6 @@ export const actions: Actions = {
 const getProviderId = async (providerName: string, svelxios: any) => {
   const { data: providers }: { data: Provider[] } = await svelxios.get('/provider/all');
 
-  console.log(providers.find(({ name }) => name === providerName)?.id)
 
   return providers.find(({ name }) => name === providerName)?.id as number;
 };

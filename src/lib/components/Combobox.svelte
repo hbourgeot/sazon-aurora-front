@@ -15,7 +15,6 @@
 
 	$: selectedValue = items.find((f) => f.value === value)?.label ?? 'Select an item...';
 	$: value = value;
-	$: console.log(value);
 
 	// We want to refocus the trigger button when the user selects
 	// an item from the list so users can continue navigating the

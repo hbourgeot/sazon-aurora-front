@@ -5,7 +5,7 @@
 	import { Icon } from '@steeze-ui/svelte-icon';
 	import type { Food, Product, Provider, User } from '$lib/types';
 	import PlatillosFormDrawer from './PlatillosFormDrawer.svelte';
-	import ProductsFormDrawer from './ProductsFormDrawer.svelte';
+	import ProductsFormDrawer from './ProvidersFormDrawer.svelte';
 
 	type FoodWithProducts = Food & { products: string };
 

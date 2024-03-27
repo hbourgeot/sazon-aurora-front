@@ -60,9 +60,7 @@
 	];
 
 	$: if (data?.id) {
-		console.log(data);
 		data.images = $page.data.foodsWithImages.find((f: Food) => f.id === data.id)?.images;
-		console.log(data);
 	}
 	$: products = $page.data.products;
 	$: foods = $page.data.foods;
@@ -120,7 +118,6 @@
 		// @ts-ignore
 		files = blobs.filter((blob) => blob !== null).map((file: File) => file);
 
-		console.log(files);
 		return files;
 	}
 
@@ -153,11 +150,9 @@
 			}
 		}
 
-		console.log(files, 'files');
 
 		if (files !== null) {
 			for (const file of files) {
-				console.log(file);
 				formData.append('files', file);
 			}
 		}
@@ -202,8 +197,6 @@
 					}
 				})
 			);
-
-			console.log(productsHtml);
 		}
 	}
 </script>
