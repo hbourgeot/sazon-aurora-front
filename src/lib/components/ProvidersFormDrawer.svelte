@@ -17,79 +17,69 @@
 
 	let formFields = [
 		{
-			name: 'id',
 			label: 'ID',
+			name: 'id',
 			type: 'hidden',
 			value: (data && data['id']) ?? null
 		},
 		{
-			name: 'name',
 			label: 'Nombre',
+			name: 'name',
 			type: 'text',
 			value: (data && data['name']) ?? ''
 		},
 		{
-			name: 'description',
-			label: 'Descripción',
+			label: 'Contacto',
+			name: 'contact',
+			type: 'text',
+			value: (data && data['contact']) ?? ''
+		},
+		{
+			label: 'Tipo de contacto',
+			name: 'contact_type',
+			type: 'text',
+			value: (data && data['contact_type']) ?? ''
+		},
+		{
+			label: 'Dirección',
+			name: 'address',
 			type: 'textarea',
-			value: (data && data['description']) ?? ''
-		},
-		{
-			name: 'price',
-			label: 'Precio',
-			type: 'number',
-			value: (data && data['price']) ?? ''
-		},
-		{
-			name: 'stock',
-			label: 'Disponibles',
-			type: 'number',
-			value: (data && data['stock']) ?? ''
-		},
-		{
-			name: 'provider_id',
-			label: 'Proveedor',
-			type: 'autocomplete',
-			value: (data && data['provider_id']) ?? ''
+			value: (data && data['address']) ?? ''
 		}
 	];
 
 	$: formFields = [
 		{
-			name: 'id',
 			label: 'ID',
+			name: 'id',
 			type: 'hidden',
 			value: (data && data['id']) ?? null
 		},
 		{
-			name: 'name',
 			label: 'Nombre',
+			name: 'name',
 			type: 'text',
 			value: (data && data['name']) ?? ''
 		},
 		{
-			name: 'description',
-			label: 'Descripción',
+			label: 'Contacto',
+			name: 'contact',
+			type: 'text',
+			value: (data && data['contact']) ?? ''
+		},
+		{
+			label: 'Tipo de contacto',
+			name: 'contact_type',
+			type: 'text',
+			value: (data && data['contact_type']) ?? ''
+		},
+		{
+			label: 'Dirección',
+			name: 'address',
 			type: 'textarea',
-			value: (data && data['description']) ?? ''
-		},
-		{
-			name: 'stock',
-			label: 'Disponibles',
-			type: 'number',
-			value: (data && data['stock']) ?? ''
-		},
-		{
-			name: 'provider_id',
-			label: 'Proveedor',
-			type: 'autocomplete',
-			value: (data && data['provider_id']) ?? ''
+			value: (data && data['address']) ?? ''
 		}
 	];
-
-	let options: string[] = $page.data.providerOptions;
-	$: options = options;
-	let filtered = options.map((opt) => ({ label: opt, value: opt }));
 
 	const handleButtonClick: (e: Event) => void = (e) => {
 		e.stopPropagation();
@@ -112,7 +102,7 @@
 			{#if typeof data?.id === 'number'}
 				Editar
 			{:else}
-				Agregar producto
+				Agregar proveedor
 			{/if}
 		</Button>
 	</Sheet.Trigger>
@@ -122,15 +112,15 @@
 		</Sheet.Header>
 		<Separator class="my-1" />
 		<form
+		bind:this={form}
 			{action}
-			bind:this={form}
 			use:enhance={({}) => {
 				return async ({ update }) => {
 					await update();
 				};
 			}}
 			method="POST"
-			class="h-full w-full"
+			class="w-full h-full"
 		>
 			{#each formFields as field}
 				{#if field.type === 'textarea'}
@@ -142,24 +132,9 @@
 						rows={5}
 						value={field.value}
 					/>
-				{:else if field.type === 'number'}
-					<Label for={field.name}>{field.label}</Label>
-					<Input
-						type="number"
-						class="focus:shadow-outline w-full px-3 py-2 leading-tight text-gray-700 focus:outline-none"
-						id={field.name}
-						name={field.name}
-						value={field.value}
-					/>
-				{:else if field.type === 'autocomplete'}
-					<div class="flex flex-col items-start justify-start gap-y-2 py-1">
+				{:else}
+					{#if field.type !== 'hidden'}
 						<Label for={field.name}>{field.label}</Label>
-						<Combobox items={filtered} bind:value={field.value} class="w-full" />
-						<Input type="hidden" id={field.name} name={field.name} value={field.value} />
-					</div>
-				{:else if ['text', 'email', 'password', 'hidden'].includes(field.type)}
-				{#if field.type !== 'hidden'}
-					<Label for={field.label}>{field.label}</Label>
 					{/if}
 					<Input
 						class="focus:shadow-outline w-full px-3 py-2 leading-tight text-gray-700 focus:outline-none {field.type ===
@@ -171,7 +146,7 @@
 						type={field.type}
 						placeholder={field.label}
 						value={field.value}
-					/>
+					></Input>
 				{/if}
 			{/each}
 		</form>
@@ -185,7 +160,7 @@
 					class="w-fit px-5"
 					on:click={handleButtonClick}
 				>
-					Guardar producto
+					Guardar proveedor
 				</Button>
 			</Sheet.Close>
 		</Sheet.Footer>

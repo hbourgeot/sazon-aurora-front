@@ -15,7 +15,9 @@ export const actions: Actions = {
     const payload = Object.fromEntries(await request.formData()) as Record<
       string,
       any
-    >;
+      >;
+    
+    console.log(payload);
     
 
     const { data } = await svelxios.post("/provider/new", payload);

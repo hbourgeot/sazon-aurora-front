@@ -6,6 +6,7 @@
 	import type { Food, Product, Provider, User } from '$lib/types';
 	import PlatillosFormDrawer from './PlatillosFormDrawer.svelte';
 	import ProductsFormDrawer from './ProvidersFormDrawer.svelte';
+	import ProvidersFormDrawer from './ProvidersFormDrawer.svelte';
 
 	type FoodWithProducts = Food & { products: string };
 
@@ -23,7 +24,7 @@
 	};
 
 	export let data: FoodWithProducts | Product | Provider | User;
-	export let tipo: 'food' | 'product' | 'provider' | 'employee';
+	export let tipo: 'food' | 'product' | 'provider' | 'employee' | 'customer' | 'hide' = 'hide';
 
 	const tableActions = {
 		food: [
@@ -125,6 +126,26 @@
 					navigator.clipboard.writeText(roles((data as User)?.role) ?? 'No tiene rol');
 				}
 			}
+		],
+		customer: [
+			{
+				label: 'Copiar Nombre',
+				action: () => {
+					navigator.clipboard.writeText((data as User)?.name ?? 'No tiene nombre');
+				}
+			},
+			{
+				label: 'Copiar Email',
+				action: () => {
+					navigator.clipboard.writeText((data as User)?.email ?? 'No tiene email');
+				}
+			},
+			{
+				label: 'Copiar Documento de Identidad',
+				action: () => {
+					navigator.clipboard.writeText(roles((data as User)?.document.toString()) ?? 'No tiene un documento de identidad');
+				}
+			}
 		]
 	};
 </script>
@@ -132,8 +153,10 @@
 <div class="flex items-center justify-center space-x-2">
 	{#if tipo === 'food'}
 		<PlatillosFormDrawer title="Editar Platillo" {data} action="?/edit" />
-	{:else}
+	{:else if tipo === 'product'}
 		<ProductsFormDrawer title="Editar Producto" {data} action="?/edit" />
+	{:else if tipo === 'provider'}
+	<ProvidersFormDrawer title="Editar proveedor" {data} action="?/edit" />
 	{/if}
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger asChild let:builder>

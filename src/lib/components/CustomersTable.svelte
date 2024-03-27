@@ -1,16 +1,16 @@
 <script lang="ts">
-	import type { Food, Product } from '$lib/types';
-	import { createTable, Render, Subscribe, createRender } from 'svelte-headless-table';
-	import { addPagination, addSortBy } from 'svelte-headless-table/plugins';
-	import { readable, writable } from 'svelte/store';
-	import * as Table from '$lib/components/ui/table';
-	import TableActions from './TableActions.svelte';
 	import { Button } from '$lib/components/ui/button';
+	import * as Table from '$lib/components/ui/table';
+	import type { User } from '$lib/types';
 	import { ArrowUpDown } from '@steeze-ui/remix-icons';
 	import { Icon } from '@steeze-ui/svelte-icon';
+	import { Render, Subscribe, createRender, createTable } from 'svelte-headless-table';
+	import { addPagination, addSortBy } from 'svelte-headless-table/plugins';
+	import { writable } from 'svelte/store';
 	import ProductsFormDrawer from './ProvidersFormDrawer.svelte';
+	import TableActions from './TableActions.svelte';
 
-	export let data: Product[];
+	export let data: User[];
 
 	const products = writable(data);
 	$: $products = data;
@@ -31,33 +31,22 @@
       }
 		}),
 		table.column({
+			accessor: 'document',
+			header: 'Documento de Identidad',
+		}),
+		table.column({
       accessor: 'name',
 			header: 'Nombre'
 		}),
 		table.column({
-      accessor: 'description',
-			header: 'Descripción',
-      // @ts-ignore
-      cell: ({ value }) => {
-        if (value && value?.length > 50) {
-          return value?.substring(0, 50) + '...' ?? "";
-        }
-        return value;
-      }
-		}),
-		table.column({
-      accessor: 'stock',
-			header: 'En almacén',
-		}),
-		table.column({
-      accessor: 'provider_id',
-			header: 'Proveedor',
+      accessor: 'email',
+			header: 'Correo Electrónico',
 		}),
 		table.column({
       accessor: (row) => row,
-			header: (row) => createRender(ProductsFormDrawer, {title: 'Agregar Producto', data: undefined, action: "?/submit"}),
+			header: '',
 			cell: ({ value }) => {
-        return createRender(TableActions, { data: value, tipo: 'product'});
+        return createRender(TableActions, { data: value, tipo: 'customer'});
 			},
       plugins: {
         sort: {
@@ -74,7 +63,7 @@
 </script>
 
 <div class="max-w-full w-full lg:w-auto">
-  <h2 class="text-xl lg:text-2xl font-light my-2">Lista de platillos</h2>
+  <h2 class="text-xl lg:text-2xl font-light my-2">Lista de clientes</h2>
 	<div class="w-full rounded-md border !bg-white">
 		<Table.Root {...$tableAttrs}>
 			<Table.Header>

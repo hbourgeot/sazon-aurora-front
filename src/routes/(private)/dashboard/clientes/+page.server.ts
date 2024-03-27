@@ -14,7 +14,7 @@ export const load = (async ({ locals: { svelxios } }) => {
   }[] = [];
   
   users.forEach((user) => {
-    if (user.role !== 1) {
+    if (user.role === 3) {
       usersWithoutPassword.push({
         id: user.id, 
         name: user.name, 
