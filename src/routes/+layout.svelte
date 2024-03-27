@@ -27,7 +27,20 @@
     font-style: italic;
 	}
 
+	:global(.gradient-bg){
+		background: linear-gradient(90deg, #f33 5%, #838 80%);
+		color: white;
+	}
+
 	:global(html, body) {
 		height: 100vh;
+	}
+
+	/* disable spinner on input number for all browsers */
+	:global(input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button) {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		margin: 0;
 	}
 </style>

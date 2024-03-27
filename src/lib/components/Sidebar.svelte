@@ -68,7 +68,7 @@
 			type="button"
 			variant="default"
 			size="icon"
-			class="absolute left-6 top-4 z-10 h-fit w-fit p-1"
+			class="absolute left-3 top-3 lg:left-6 lg:top-4 z-10 h-fit w-fit p-1"
 			builders={[builder]}
 			bind:this={trigger}
 		>

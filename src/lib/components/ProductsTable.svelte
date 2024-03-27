@@ -1,18 +1,21 @@
 <script lang="ts">
-	import type { Food } from '$lib/types';
+	import type { Food, Product } from '$lib/types';
 	import { createTable, Render, Subscribe, createRender } from 'svelte-headless-table';
 	import { addPagination, addSortBy } from 'svelte-headless-table/plugins';
-	import { readable } from 'svelte/store';
+	import { readable, writable } from 'svelte/store';
 	import * as Table from '$lib/components/ui/table';
 	import TableActions from './TableActions.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { ArrowUpDown } from '@steeze-ui/remix-icons';
 	import { Icon } from '@steeze-ui/svelte-icon';
-	import PlatillosFormDrawer from './PlatillosFormDrawer.svelte';
+	import ProductsFormDrawer from './ProductsFormDrawer.svelte';
 
-	export let data: (Food & { products: string })[];
+	export let data: Product[];
 
-	const table = createTable(readable(data), {
+	const products = writable(data);
+	$: $products = data;
+
+	const table = createTable(products, {
 		page: addPagination({initialPageSize: 7}),
     sort: addSortBy()
 	});
@@ -43,39 +46,18 @@
       }
 		}),
 		table.column({
-      accessor: 'price',
-			header: 'Precio',
-			cell: ({ value }) => {
-        const formatted = new Intl.NumberFormat('en-US', {
-          style: 'currency',
-					currency: 'USD'
-				}).format(value);
-				return formatted;
-			}
+      accessor: 'stock',
+			header: 'En almacén',
 		}),
 		table.column({
-      accessor: 'created_at',
-			header: 'Creado',
-      plugins: {
-        sort: {
-          disable: true
-        }
-      }
-		}),
-		table.column({
-      accessor: 'products',
-			header: 'Productos',
-      plugins: {
-        sort: {
-          disable: true
-        }
-      }
+      accessor: 'provider_id',
+			header: 'Proveedor',
 		}),
 		table.column({
       accessor: (row) => row,
-			header: (row) => createRender(PlatillosFormDrawer, {title: 'Agregar Platillo', data: undefined, action: "?/submit"}),
+			header: (row) => createRender(ProductsFormDrawer, {title: 'Agregar Producto', data: undefined, action: "?/submit"}),
 			cell: ({ value }) => {
-        return createRender(TableActions, { data: value, tipo: 'food'});
+        return createRender(TableActions, { data: value, tipo: 'product'});
 			},
       plugins: {
         sort: {

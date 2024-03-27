@@ -29,9 +29,3 @@ export interface FoodProduct {
   amount: number;
   image?: string;
 }
-
-export interface ImageFile {
-  file: File;
-  src: string;
-  progress: number | undefined;
-}

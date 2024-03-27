@@ -29,15 +29,8 @@
       {/if}
     </h1>
   {/if}
-  <div class="content">
+  <div class="w-full lg:w-9/10 h-full my-0 mx-auto">
     <slot />
   </div>
 </section>
 
-<style>
-  .content {
-    width: 90%;
-    height: 100%;
-    margin: 0 auto;
-  }
-</style>

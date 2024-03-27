@@ -4,6 +4,8 @@
 	import { EllipsisHorizontal } from '@steeze-ui/heroicons';
 	import { Icon } from '@steeze-ui/svelte-icon';
 	import type { Food, Product, Provider, User } from '$lib/types';
+	import PlatillosFormDrawer from './PlatillosFormDrawer.svelte';
+	import ProductsFormDrawer from './ProductsFormDrawer.svelte';
 
 	type FoodWithProducts = Food & { products: string };
 
@@ -127,21 +129,25 @@
 	};
 </script>
 
-<DropdownMenu.Root>
-	<DropdownMenu.Trigger asChild let:builder>
-		<Button variant="ghost" builders={[builder]} size="icon" class="relative h-8 w-8 p-0">
-			<span class="sr-only">Open menu</span>
-			<Icon src={EllipsisHorizontal} class="h-4 w-4" />
-		</Button>
-	</DropdownMenu.Trigger>
-	<DropdownMenu.Content>
-		<DropdownMenu.Group>
+<div class="flex items-center justify-center space-x-2">
+	{#if tipo === 'food'}
+		<PlatillosFormDrawer title="Editar Platillo" {data} action="?/edit" />
+	{:else}
+		<ProductsFormDrawer title="Editar Producto" {data} action="?/edit" />
+	{/if}
+	<DropdownMenu.Root>
+		<DropdownMenu.Trigger asChild let:builder>
+			<Button variant="ghost" builders={[builder]} size="icon" class="relative h-8 w-8 p-0">
+				<span class="sr-only">Open menu</span>
+				<Icon src={EllipsisHorizontal} class="h-4 w-4" />
+			</Button>
+		</DropdownMenu.Trigger>
+		<DropdownMenu.Content>
 			<DropdownMenu.Label>Acciones</DropdownMenu.Label>
-			<DropdownMenu.Item>Editar</DropdownMenu.Item>
-		</DropdownMenu.Group>
-		<DropdownMenu.Separator />
-		{#each tableActions[tipo] as action}
-      <DropdownMenu.Item on:click={action.action}>{action.label}</DropdownMenu.Item>
-    {/each}
-	</DropdownMenu.Content>
-</DropdownMenu.Root>
+			<DropdownMenu.Separator />
+			{#each tableActions[tipo] as action}
+				<DropdownMenu.Item on:click={action.action}>{action.label}</DropdownMenu.Item>
+			{/each}
+		</DropdownMenu.Content>
+	</DropdownMenu.Root>
+</div>

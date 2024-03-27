@@ -28,7 +28,8 @@ export const actions: Actions = {
     let payload = Object.fromEntries(await request.formData()) as Record<
       string,
       any
-    >;
+      >;
+    
     const providerId = await getProviderId(payload.provider_id, svelxios);
 
     payload = {
@@ -37,10 +38,16 @@ export const actions: Actions = {
       provider_id: providerId,
       stock: parseInt(payload.stock),
     };
-    const { data: product } = await svelxios.post<Product>(
-      "/product/new",
-      payload
-    );
+
+    try {
+      const { data: product } = await svelxios.post<Product>(
+        "/product/new",
+        payload
+      );
+      console.log(product);
+    } catch (error: any) {
+      console.log(error.response);
+    }
   },
 
   edit: async ({ locals: { svelxios }, request }) => {
@@ -62,9 +69,9 @@ export const actions: Actions = {
 };
 
 const getProviderId = async (providerName: string, svelxios: any) => {
-  const {
-    data: { providers },
-  }: { data: { providers: Provider[] } } = await svelxios.get("/provider/all");
+  const { data: providers }: { data: Provider[] } = await svelxios.get('/provider/all');
+
+  console.log(providers.find(({ name }) => name === providerName)?.id)
 
   return providers.find(({ name }) => name === providerName)?.id as number;
 };
